@@ -21,3 +21,25 @@ and also learn to build a custom chatbot.
 
 All concepts are illustrated with numerous examples, which you can play with directly in our Jupyter notebook
 environment to get hands-on experience with prompt engineering.
+
+```mermaid
+graph LR
+    A["AI for devs"] --> X["LLM's History"]
+    A --> B["LLM APIs interaction principles"]
+    B --> D["Use clear and concise language"]
+    B --> E["Avoid ambiguity and vagueness"]
+    B --> F["Consider cultural and linguistic differences"]
+    A --> G["Promt engineering for developers"]
+    G --> H["Summarizing (e.g., summarizing user reviews for brevity)"]
+    G --> I["Inferring (e.g., sentiment classification, topic extraction)"]
+    G --> J["Transforming text (e.g., translation, spelling & grammar correction)"]
+    G --> K["Expanding (e.g., automatically writing emails)"]
+    A --> M["Code completion tools"]
+    M --> N["Github Copilot"]
+    M --> O["AWS CodeWisper"]
+    A --> P["AI state of the art"]
+    P --> Q["Google AI"]
+    P --> R["OpenSource AI"]
+    P --> U["OpenAI"]
+    P --> V["Microsoft AI"]
+```
