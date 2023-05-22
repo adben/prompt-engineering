@@ -23,23 +23,36 @@ All concepts are illustrated with numerous examples, which you can play with dir
 environment to get hands-on experience with prompt engineering.
 
 ```mermaid
+%%{init: {'theme': 'neutral'}}%%
 graph LR
     A["AI for devs"] --> X["LLM's History"]
-    A --> B["LLM APIs interaction principles"]
+    A --> B["LLM APIs - conversational AI"]
     B --> D["Use clear and concise language"]
     B --> E["Avoid ambiguity and vagueness"]
     B --> F["Consider cultural and linguistic differences"]
-    A --> G["Promt engineering for developers"]
+    A --> G["Prompt engineering for developers"]
     G --> H["Summarizing (e.g., summarizing user reviews for brevity)"]
     G --> I["Inferring (e.g., sentiment classification, topic extraction)"]
     G --> J["Transforming text (e.g., translation, spelling & grammar correction)"]
     G --> K["Expanding (e.g., automatically writing emails)"]
+    A --> L["Prompt injection"]
     A --> M["Code completion tools"]
     M --> N["Github Copilot"]
     M --> O["AWS CodeWisper"]
     A --> P["AI state of the art"]
     P --> Q["Google AI"]
     P --> R["OpenSource AI"]
-    P --> U["OpenAI"]
-    P --> V["Microsoft AI"]
+    P --> S["Facebook AI"]
+    P --> T["OpenAI"]
+    P --> U["Microsoft AI"]
+    P --> V["IBM AI"]
+    P --> W["Amazon AI"]
+
+%%    style X fill: lightblue, stroke: #333, stroke-width: 2px
+%%    style B fill: lightyellow, stroke: #333, stroke-width: 2px
+%%    style G fill: magenta, stroke: #333, stroke-width: 2px
+%%    style L fill: lightgrey, stroke: #333, stroke-width: 2px
+%%    style M fill: lightgreen, stroke: #333, stroke-width: 2px
+%%    style N fill: lightgreen, stroke: #333, stroke-width: 2px
+%%    style P fill: lightcyan, stroke: #333, stroke-width: 2px
 ```
