@@ -11,23 +11,29 @@ This README provides a summary of the key milestones in the development of Trans
 gantt
     dateFormat  YYYY-MM-DD
     title Transformers' Impact on NLU
-
+    
     section Early Development
-    2017-06-01 2017-12-31  Research on Attention Mechanism
-    2017-09-01 2018-03-31  Transformer Architecture Proposed
-
+    Research on Attention Mechanism : 2017-06-01, 2017-12-31
+    Transformer Architecture Proposed : 2017-09-01, 2018-03-31
+    
     section Rise of BERT
-    2018-10-11 2018-11-15  Google BERT Released
-    2018-11-16 2019-05-31  BERT Pretrained Models Developed
-    2019-06-01 2019-12-31  BERT-Based Transfer Learning Gains Prominence
-
+    Google BERT Released : 2018-10-11, 2018-11-15
+    BERT Pretrained Models Developed : 2018-11-16, 2019-05-31
+    BERT-Based Transfer Learning Gains Prominence : 2019-06-01, 2019-12-31
+    
     section OpenAI GPT-3
-    2020-06-11 2020-06-15  OpenAI GPT-3 Announced
-    2020-06-16 2020-12-31  GPT-3's Multilingual and Few-Shot Learning Abilities Showcased
-    2021-01-01 2021-09-30  GPT-3 Enhancements and Applications Demonstrated
-
+    OpenAI GPT-3 Announced : 2020-06-11, 2020-06-15
+    GPT-3's Multilingual and Few-Shot Learning Abilities Showcased : 2020-06-16, 2020-12-31
+    GPT-3 Enhancements and Applications Demonstrated : 2021-01-01, 2021-09-30
+    
+    section Meta LAMA
+    Meta LAMA Introduced : 2022-04-01, 2022-07-31
+    LAMA's Zero-Shot Learning and Commonsense Reasoning Showcased : 2022-08-01, 2022-12-31
+    
     section Ongoing Developments
-    2022-01-01 2023-05-22  Continued Research and Advancements in Transformers
+    Continued Research and Advancements in Transformers : 2023-01-01, 2023-05-22
+
+
 ```
 
 ## Key Models and Frameworks
