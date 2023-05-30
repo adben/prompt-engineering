@@ -16,8 +16,6 @@ D
 Transformers.md,9/6/96440a71ca02ece7c82d02da9d7ff1fed8e0a57a
 A
 4-inferring.ipynb,1/0/10d9c38e891fbe2c778f451b90497655985f7135
-;
-buddy.ipynb,0/c/0c628ac2f458ae8fd78665fbe821dc152ce1376f
 C
 3-summarizing.ipynb,7/d/7def55b35c0bb80b83728ff6446ee29419b800cd
 ?
