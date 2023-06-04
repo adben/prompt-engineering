@@ -58,11 +58,21 @@ mindmap
             e.g., automatically writing emails
     LLMs Limitations
     ::icon(fa fa-book-reader)
+        Prompt injection
         Artificial Hallucinations
         Memory
             Vector databases
+                analitycDB
+                Chroma
+                milvus
+                myscale
+                QDrant
+                Pinecone
+                Redis
+                Typesense
+                Weaviate
+                Zilliz
             Embedings
-        Prompt injection
     ::icon(fa fa-bookmark-o)
     LLMs as software development tools tools
     ::icon(fa fa-book-dead)
