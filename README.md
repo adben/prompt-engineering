@@ -34,13 +34,13 @@ mindmap
                 2013 Word2Vec
                 2014 GPT
                 2017 Transformer
-                2018 GPT-2
+                2018 GPT 2
                 2019 BERT
-                2020 GPT-3
+                2020 GPT 3
                 2021 Codex
             RRNs
             Transformers and embeddings
-            Auto-generative vs auto-encoding
+            Auto generative vs auto encoding
         LLMs today
             Base LLM vs instruction LLM
     LLM APIs conversational AI
