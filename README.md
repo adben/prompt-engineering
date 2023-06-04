@@ -73,10 +73,16 @@ mindmap
     AI state of the art
     ::icon(fa fa-books)
         Google AI
+            Palm 2
+            Google AI suite competitor of Microsoft
         OpenSource AI
         Facebook AI
         OpenAI
         Microsoft AI
+            Copilot X taking care of bussiness
         IBM AI
         Amazon AI
+    Future prospect
+        Hugging AI
+        AGI
 ```
