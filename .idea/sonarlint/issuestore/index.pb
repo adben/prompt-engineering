@@ -8,8 +8,6 @@ D
 5-transforming.ipynb,e/b/eb16f6a9c9846977d6ad48f0e771b964aa71ff52
 ;
 scrum.ipynb,3/5/35a4f06eda1cdec576df0612d09ce7133f13b311
-?
-Transformers.md,9/6/96440a71ca02ece7c82d02da9d7ff1fed8e0a57a
 8
 scrum.md,b/e/be273055c6ac88d944bc0cdb1661f1ccbb8a4674
 A

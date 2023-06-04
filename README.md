@@ -29,7 +29,6 @@ mindmap
         How soon would AI get our jobs
     LLMs basic
         LLMs History
-        ::icon(fa fa-book-open)
             Timeline
                 2013 Word2Vec
                 2014 GPT
@@ -44,12 +43,10 @@ mindmap
         LLMs today
             Base LLM vs instruction LLM
     LLM APIs conversational AI
-    ::icon(fa fa-book-reader)
         Use clear and concise language
         Avoid ambiguity and vagueness
         Consider cultural and linguistic differences
     Prompt engineering for developers
-    ::icon(fa fa-bookmark)
         Summarizing
             e.g., summarizing user reviews for brevity
         Inferring
@@ -59,7 +56,6 @@ mindmap
         Expanding
             e.g., automatically writing emails
     LLMs Limitations
-    ::icon(fa fa-book-reader)
         Prompt injection
         Artificial Hallucinations
         Memory
@@ -75,15 +71,12 @@ mindmap
                 Weaviate
                 Zilliz
             Embedings
-    ::icon(fa fa-bookmark-o)
     LLMs as software development tools tools
-    ::icon(fa fa-book-dead)
         Github Copilot
         AWS CodeWisper
         Pseudo code as intermediate step
         Lowcode  nocode one step ahead?
     AI state of the art
-    ::icon(fa fa-books)
         Google AI
             Palm 2
             Google AI suite competitor of Microsoft

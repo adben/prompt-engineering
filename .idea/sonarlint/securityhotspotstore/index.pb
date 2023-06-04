@@ -10,8 +10,6 @@ D
 scrum.ipynb,3/5/35a4f06eda1cdec576df0612d09ce7133f13b311
 8
 scrum.md,b/e/be273055c6ac88d944bc0cdb1661f1ccbb8a4674
-?
-Transformers.md,9/6/96440a71ca02ece7c82d02da9d7ff1fed8e0a57a
 A
 4-inferring.ipynb,1/0/10d9c38e891fbe2c778f451b90497655985f7135
 ?
