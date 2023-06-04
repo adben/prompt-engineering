@@ -25,6 +25,8 @@ environment to get hands-on experience with prompt engineering.
 ```mermaid
 mindmap
   root((AI for devs))
+    Intro why this presentation
+        How soon would AI get our jobs
     LLMs basic
         LLMs History
         ::icon(fa fa-book-open)
