@@ -30,6 +30,12 @@ mindmap
         Long history
     LLMs History
     ::icon(fa fa-book-open)
+    LLMs Limitations
+    ::icon(fa fa-book-reader)
+        Artificial Hallucinations
+        Memory
+        Vector databases
+        Embedings
     LLM APIs conversational AI
     ::icon(fa fa-book-reader)
         Use clear and concise language
@@ -47,10 +53,11 @@ mindmap
             e.g., automatically writing emails
     Prompt injection
     ::icon(fa fa-bookmark-o)
-    Code completion tools
+    LLMs tools
     ::icon(fa fa-book-dead)
         Github Copilot
         AWS CodeWisper
+        
     AI state of the art
     ::icon(fa fa-books)
         Google AI

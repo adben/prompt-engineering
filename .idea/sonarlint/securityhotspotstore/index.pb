@@ -1,6 +1,4 @@
 
-A
-2-iterative.ipynb,e/b/eb19586e59176b7c36e28bf003459a34d61922bf
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
@@ -16,7 +14,7 @@ D
 Transformers.md,9/6/96440a71ca02ece7c82d02da9d7ff1fed8e0a57a
 A
 4-inferring.ipynb,1/0/10d9c38e891fbe2c778f451b90497655985f7135
-C
-3-summarizing.ipynb,7/d/7def55b35c0bb80b83728ff6446ee29419b800cd
 ?
 7-chatbot.ipynb,2/6/26051b436b05e7dbb5d6de1fc76691e99bfd09af
+C
+3-summarizing.ipynb,7/d/7def55b35c0bb80b83728ff6446ee29419b800cd
