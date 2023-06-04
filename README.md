@@ -25,17 +25,15 @@ environment to get hands-on experience with prompt engineering.
 ```mermaid
 mindmap
   root((AI for devs))
-    Origins
-    ::icon(fa fa-book)
-        Long history
     LLMs History
     ::icon(fa fa-book-open)
-    LLMs Limitations
-    ::icon(fa fa-book-reader)
-        Artificial Hallucinations
-        Memory
-        Vector databases
-        Embedings
+        2013 Word2Vec
+        2014 GPT
+        2017 Transformer
+        2018 GPT-2
+        2019 BERT
+        2020 GPT-3
+        2021 Codex
     LLM APIs conversational AI
     ::icon(fa fa-book-reader)
         Use clear and concise language
@@ -51,14 +49,20 @@ mindmap
             e.g., translation, spelling & grammar correction
         Expanding
             e.g., automatically writing emails
-    Prompt injection
+    LLMs Limitations
+    ::icon(fa fa-book-reader)
+        Artificial Hallucinations
+        Memory
+            Vector databases
+            Embedings
+        Prompt injection
     ::icon(fa fa-bookmark-o)
     LLMs as software development tools tools
     ::icon(fa fa-book-dead)
         Github Copilot
         AWS CodeWisper
         Pseudo code as intermediate step
-        Low-code / no-code one step ahead?
+        Lowcode  nocode one step ahead?
     AI state of the art
     ::icon(fa fa-books)
         Google AI
