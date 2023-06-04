@@ -43,21 +43,22 @@ mindmap
         Consider cultural and linguistic differences
     Prompt engineering for developers
     ::icon(fa fa-bookmark)
-        Summarizing 
-            e.g., summarizing user reviews for brevity  
-        Inferring 
+        Summarizing
+            e.g., summarizing user reviews for brevity
+        Inferring
             e.g., sentiment classification, topic extraction
-        Transforming text   
+        Transforming text
             e.g., translation, spelling & grammar correction
-        Expanding 
+        Expanding
             e.g., automatically writing emails
     Prompt injection
     ::icon(fa fa-bookmark-o)
-    LLMs tools
+    LLMs as software development tools tools
     ::icon(fa fa-book-dead)
         Github Copilot
         AWS CodeWisper
-        
+        Pseudo code as intermediate step
+        Low-code / no-code one step ahead?
     AI state of the art
     ::icon(fa fa-books)
         Google AI
