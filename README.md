@@ -48,7 +48,7 @@ mindmap
         Consider cultural and linguistic differences
     Prompt engineering for developers
         Summarizing
-            e.g., summarizing user reviews for brevity
+            A[e.g., <a href='./scrum.ipynb'><b>summarizing</b></a> user reviews for brevity]
         Inferring
             e.g., sentiment classification, topic extraction
         Transforming text
@@ -90,4 +90,6 @@ mindmap
     Future prospect
         Hugging AI
         AGI
+    Build with AI for the enterprise
+    
 ```
