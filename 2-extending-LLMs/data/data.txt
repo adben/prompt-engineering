@@ -1,0 +1,2232 @@
+
+<div id="preamble">
+    <div class="sectionbody">
+        <div class="exampleblock top-menu-guides">
+            <div class="content">
+                <div class="paragraph">
+                    <p><strong>Release Notes</strong> <span class="icon"><i class="fa fa-angle-down"></i></span></p>
+                </div>
+                <div class="ulist">
+                    <ul>
+                        <li>
+                            <p><a href="https://www.keycloak.org/guides#getting-started">Getting Started</a></p>
+                        </li>
+                        <li>
+                            <p><a href="https://www.keycloak.org/docs/21.1.2/securing_apps/">Securing Apps</a></p>
+                        </li>
+                        <li>
+                            <p><a href="https://www.keycloak.org/docs/21.1.2/server_admin/">Server Administration</a></p>
+                        </li>
+                        <li>
+                            <p><a href="https://www.keycloak.org/docs/21.1.2/server_development/">Server Developer</a></p>
+                        </li>
+                        <li>
+                            <p><a href="https://www.keycloak.org/docs/21.1.2/authorization_services/">Authorization Services</a></p>
+                        </li>
+                        <li>
+                            <p><a href="https://www.keycloak.org/docs/21.1.2/upgrading/">Upgrading</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="exampleblock top-menu-version">
+            <div class="content">
+                <div class="paragraph">
+                    <p>Version <strong>21.1.2</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-21-1-2"><a class="anchor" href="#keycloak-21-1-2"></a>Keycloak 21.1.2</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="changes-in-validating-schemes-for-valid-redirect-uris"><a class="anchor" href="#changes-in-validating-schemes-for-valid-redirect-uris"></a>Changes in validating schemes for valid redirect URIs</h3>
+            <div class="paragraph">
+                <p>If an application client is using non http(s) custom schemes, from now on the validation requires that a valid redirect pattern explicitly allows that scheme. Example patterns for allowing <code>custom</code> scheme are <code>custom:/test</code>, <code>custom:/test/*</code> or <code>custom:*</code>. For security reasons a general pattern like <code>*</code> does not cover them anymore.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-21-1-0"><a class="anchor" href="#keycloak-21-1-0"></a>Keycloak 21.1.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="monorepo"><a class="anchor" href="#monorepo"></a>Monorepo</h3>
+            <div class="paragraph">
+                <p>In the past Keycloak was maintained across multiple GitHub repositories:</p>
+            </div>
+            <div class="ulist">
+                <ul>
+                    <li>
+                        <p><a href="https://github.com/keycloak/keycloak-documentation">Documentation repository</a></p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/keycloak/keycloak-ui">UI repository</a></p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/keycloak/keycloak-nodejs-admin-client">Node.js admin client repository</a></p>
+                    </li>
+                </ul>
+            </div>
+            <div class="paragraph">
+                <p>Having multiple repositories introduced a lot of complexity and toil. For example frequently multiple pull requests had to be sent
+                    to different repositories for a single change.</p>
+            </div>
+            <div class="paragraph">
+                <p>To simplify things we have now migrated everything into the <a href="https://github.com/keycloak/keycloak">main repository</a>.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="fips-140-2-support"><a class="anchor" href="#fips-140-2-support"></a>FIPS 140-2 support</h3>
+            <div class="paragraph">
+                <p>FIPS 140-2 support in Keycloak, which was preview in the previous release, is now promoted to be officially supported.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="experimental-account-console-version-3"><a class="anchor" href="#experimental-account-console-version-3"></a>Experimental Account Console version 3</h3>
+            <div class="paragraph">
+                <p>The Account Console version 3 is now available as an experimental feature in Keycloak. This version supports custom fields created with the 'User Profile' feature. If you are looking to try it out and provide us with some early feedback you can enable it as follows:</p>
+            </div>
+            <div class="listingblock">
+                <div class="content">
+                    <pre class="CodeRay highlight"><code>bin/kc.sh start-dev --features=account3</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="changes-to-keycloak-authorization-services-support-in-keycloak-java-based-adapters"><a class="anchor" href="#changes-to-keycloak-authorization-services-support-in-keycloak-java-based-adapters"></a>Changes to Keycloak Authorization Services support in Keycloak Java-based Adapters</h3>
+            <div class="paragraph">
+                <p>As part of the removal of the <a href="https://www.keycloak.org/2023/03/adapter-deprecation-update">deprecated</a> adapters, the Keycloak Policy Enforcer was extracted from the adapters code base
+                    into a separate dependency:</p>
+            </div>
+            <div class="listingblock">
+                <div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span>org.keycloak<span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span>keycloak-policy-enforcer<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span>${version.keycloak}<span class="tag">&lt;/version&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span></code></pre>
+                </div>
+            </div>
+            <div class="paragraph">
+                <p>By providing this dependency, we expect making it possible to integrate the policy enforcer with the Java stack of your preference.</p>
+            </div>
+            <div class="paragraph">
+                <p>It also provides built-in support for enabling the policy enforcer to Jakarta applications protected with <a href="https://docs.wildfly.org/26/Admin_Guide.html#Elytron_OIDC_Client">Wildfly Elytron</a>.</p>
+            </div>
+            <div class="paragraph">
+                <p>For now, this dependency is not yet GA as we are still working on the quickstarts and documentation.</p>
+            </div>
+            <div class="paragraph">
+                <p>This work should not impact existing applications using the deprecated adapters.
+                    = Javascript engine available by default</p>
+            </div>
+            <div class="paragraph">
+                <p>In the previous version, when Keycloak was used on Java 17 with Javascript providers it was needed to add the Nashorn
+                    javascript engine to the distribution. This is no longer needed as Nashorn javascript engine is available in Keycloak server by default.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-21-0-0"><a class="anchor" href="#keycloak-21-0-0"></a>Keycloak 21.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="old-admin-console-removed"><a class="anchor" href="#old-admin-console-removed"></a>Old Admin Console removed</h3>
+            <div class="paragraph">
+                <p>In Keycloak 19 the new admin console was graduated to the new default admin console, and the old admin console was
+                    deprecated. In this release the old admin console has been removed completely.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="keycloak-uses-micrometer-for-metrics"><a class="anchor" href="#keycloak-uses-micrometer-for-metrics"></a>Keycloak uses Micrometer for metrics</h3>
+            <div class="paragraph">
+                <p>Keycloak provides an optional a metrics endpoint which exports metrics in the Prometheus format.
+                    In this release the implementation to provide this data switched from SmallRye to Micrometer.
+                    Due to this change, metrics have been renamed.</p>
+            </div>
+            <div class="paragraph">
+                <p>See the migration guide for details.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="java-11-support-for-keycloak-server-deprecated"><a class="anchor" href="#java-11-support-for-keycloak-server-deprecated"></a>Java 11 support for Keycloak server deprecated</h3>
+            <div class="paragraph">
+                <p>Running the Keycloak server with Java 11 is now deprecated, and planned to be removed in Keycloak 22.</p>
+            </div>
+            <div class="paragraph">
+                <p>Adapters remain supported on Java 8, Java 11, and Java 17. However, we are planning to remove support for Java 8 in the
+                    not too distant future.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="hashicop-vault-no-longer-supported"><a class="anchor" href="#hashicop-vault-no-longer-supported"></a>Hashicop Vault no longer supported</h3>
+            <div class="paragraph">
+                <p>We removed the out-of-box support for Hashicorp vault in this release.</p>
+            </div>
+            <div class="paragraph">
+                <p>See this <a href="https://github.com/keycloak/keycloak/discussions/16446">discussion</a> for more details.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="saml-sp-metadata-changes"><a class="anchor" href="#saml-sp-metadata-changes"></a>SAML SP metadata changes</h3>
+            <div class="paragraph">
+                <p>Prior to this release, SAML SP metadata contained the same key for both
+                    signing and encryption use. Starting with this version of Keycloak,
+                    we include only encryption intended realm keys for encryption use
+                    in SP metadata. For each encryption key descriptor we also specify
+                    the algorithm that it is supposed to be used with. The following table shows
+                    the supported XML-Enc algorithms with the mapping to Keycloak realm keys.
+                    See the <a href="https://www.keycloak.org/docs/21.1.2/upgrading/">Upgrading Guide</a> for more details.</p>
+            </div>
+            <table class="tableblock frame-all grid-all spread">
+                <colgroup>
+                    <col style="width: 50%;">
+                    <col style="width: 50%;">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>XML-Enc algorithm</strong></p></td>
+                    <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Keycloak realm key algorithm</strong></p></td>
+                </tr>
+                <tr>
+                    <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.w3.org/TR/2002/REC-xmlenc-core-20021210/Overview.html#rsa-oaep-mgf1p">rsa-oaep-mgf1p</a></p></td>
+                    <td class="tableblock halign-left valign-top"><p class="tableblock">RSA-OAEP</p></td>
+                </tr>
+                <tr>
+                    <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.w3.org/TR/2002/REC-xmlenc-core-20021210/Overview.html#rsa-1_5">rsa-1_5</a></p></td>
+                    <td class="tableblock halign-left valign-top"><p class="tableblock">RSA1_5</p></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="sect2">
+            <h3 id="deprecated-methods-from-user-session-provider-were-removed"><a class="anchor" href="#deprecated-methods-from-user-session-provider-were-removed"></a>Deprecated methods from user session provider were removed</h3>
+            <div class="paragraph">
+                <p>Several deprecated methods were removed from user session provider. If not done already,
+                    their usage needs to be replaced with the corresponding replacement documented in Javadoc
+                    of Keycloak 20 release. See <a href="https://www.keycloak.org/docs/21.1.2/upgrading/">Upgrading Guide</a> for more details.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="new-storage-code-is_client_role-code-searchable-field-was-deprecated"><a class="anchor" href="#new-storage-code-is_client_role-code-searchable-field-was-deprecated"></a>New storage: <code>IS_CLIENT_ROLE</code> searchable field was deprecated</h3>
+            <div class="paragraph">
+                <p>The <code>IS_CLIENT_ROLE</code> searchable field from the <code>RoleModel</code> was deprecated. It
+                    should be replaced with the <code>CLIENT_ID</code> searchable field used with the operators
+                    <code>EXISTS</code> or <code>NOT_EXISTS</code>. See JavaDoc of Keycloak 21 for more details.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="fips-140-2-preview-support"><a class="anchor" href="#fips-140-2-preview-support"></a>FIPS 140-2 preview support</h3>
+            <div class="paragraph">
+                <p>FIPS 140-2 support in Keycloak, which was experimental in the previous release, is now promoted to preview. There were many fixes and improvements to create this preview version.
+                    For the details, see the <a href="https://www.keycloak.org/guides#server">FIPS documentation</a>. Feedback is welcome!</p>
+            </div>
+            <div class="paragraph">
+                <p>Thanks again to <a href="https://github.com/david-rh">David Anderson</a>, <a href="https://github.com/sudeepd">Sudeep Das</a> and <a href="https://github.com/isaacjensen">Isaac Jensen</a>
+                    for their huge help with this feature.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="support-for-the-standard-code-forwarded-code-header-when-running-behind-a-reverse-proxy"><a class="anchor" href="#support-for-the-standard-code-forwarded-code-header-when-running-behind-a-reverse-proxy"></a>Support for the standard <code>Forwarded</code> header when running behind a reverse proxy</h3>
+            <div class="paragraph">
+                <p>In addition to recognize the non-standard <code>X-Forwarded-*</code> to fetch information
+                    added by proxies that would otherwise be altered or lost when proxy servers are involved in the path of the request, Keycloak
+                    can now leverage the standard <code>Forwarded</code> header for the same purpose.</p>
+            </div>
+            <div class="paragraph">
+                <p>For more details, see the <a href="https://www.keycloak.org/server/reverseproxy">Using a reverse proxy</a> guide.</p>
+            </div>
+            <div class="paragraph">
+                <p>Please, make sure your proxy is also overriding the <code>Forwarded</code> header when making requests to Keycloak nodes.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="the-container-image-is-now-based-on-ubi9-micro"><a class="anchor" href="#the-container-image-is-now-based-on-ubi9-micro"></a>The container image is now based on ubi9-micro</h3>
+            <div class="paragraph">
+                <p>To enhance security, the <a href="https://quay.io/repository/keycloak/keycloak?tab=info">Keycloak Container Image</a> has been modified in two ways: First, it is now based on UBI9, rather than UBI8. Second, we have switched to <code>-micro</code>, whereas <code>-minimal</code> was used before.</p>
+            </div>
+            <div class="paragraph">
+                <p>The change to UBI9 will not have any impact on most users. In rare cases the glibc error <a href="https://github.com/keycloak/keycloak/issues/17290">CPU does not support x86-64-v2</a> may appear. <code>x86-64-v2</code> has been available from processors since 2009. You’re most likely to encounter this issue when your virtualization environment is misconfigured.</p>
+            </div>
+            <div class="paragraph">
+                <p>The change from <code>-minimal</code> to <code>-micro</code> has more potential impact. Users making simple customizations to the image won’t notice any difference, however any user that installs RPMs will need to change how they do that. The <a href="https://www.keycloak.org/server/containers">container guide</a> has been updated to show you how.</p>
+            </div>
+            <div class="paragraph">
+                <p>As a result of these changes, there has been an 82% reduction in known CVEs affecting the Keycloak Container Image!</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="other-improvements"><a class="anchor" href="#other-improvements"></a>Other improvements</h3>
+            <div class="ulist">
+                <ul>
+                    <li>
+                        <p>Option to disable client registration access token rotation. Thanks to <a href="https://github.com/reda-alaoui">Réda Housni Alaoui</a></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-20-0-0"><a class="anchor" href="#keycloak-20-0-0"></a>Keycloak 20.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="wildfly-distribution-removed"><a class="anchor" href="#wildfly-distribution-removed"></a>WildFly distribution removed</h3>
+            <div class="paragraph">
+                <p>In Keycloak 17.0.0 the new Quarkus based distribution of Keycloak, while the WildFly based distribution was deprecated.
+                    With this release the WildFly distribution has been removed, and is no longer supported.</p>
+            </div>
+            <div class="paragraph">
+                <p>If you are still using the WildFly distribution we highly encourage migrating to the Quarkus distribution as soon as
+                    possible, see the <a href="https://www.keycloak.org/migration/migrating-to-quarkus">Migration Guide</a> for more details.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="new-keycloak-operator-upgrade"><a class="anchor" href="#new-keycloak-operator-upgrade"></a>New Keycloak Operator upgrade</h3>
+            <div class="paragraph">
+                <p>We are happy to announce that the new Keycloak Operator for the Quarkus based distribution is no longer a preview
+                    feature. We added new functionality as well as a number of improvements, some which has resulted in breaking changes.</p>
+            </div>
+            <div class="sect3">
+                <h4 id="realm-operator"><a class="anchor" href="#realm-operator"></a>Realm Operator</h4>
+                <div class="paragraph">
+                    <p>As the new Operator currently lacks some of the CRs (e.g. Client and User), we’re introducing a temporary workaround in
+                        the form of a Realm Operator. Please see its <a href="https://github.com/keycloak/keycloak-realm-operator">GitHub Repository</a> for
+                        more details. See also <a href="https://www.keycloak.org/2022/09/operator-crs">The future of Keycloak Operator CRs</a>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="supported-openjdk-versions"><a class="anchor" href="#supported-openjdk-versions"></a>Supported OpenJDK versions</h3>
+            <div class="paragraph">
+                <p>Keycloak now supports OpenJDK 17 both for the server and adapters.</p>
+            </div>
+            <div class="paragraph">
+                <p>With the removal of the WildFly based distribution there is no longer support for running the Keycloak server on OpenJDK 8.
+                    We also plan to remove support for Keycloak adapters on OpenJDK 8 in Keycloak 21.</p>
+            </div>
+            <div class="paragraph">
+                <p>Starting with Keycloak 22 we plan to only support the latest OpenJDK LTS release and aiming to quickly also support the
+                    latest OpenJDK release. That means we will be also removing OpenJDK 11 support for the Keycloak server in Keycloak 22.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="hostname-provider-now-supports-configuring-the-complete-base-url"><a class="anchor" href="#hostname-provider-now-supports-configuring-the-complete-base-url"></a>Hostname provider now supports configuring the complete base URL</h3>
+            <div class="paragraph">
+                <p>In this release, we are introducing two additional server options to set the base URL for frontend request and the Admin
+                    Console:</p>
+            </div>
+            <div class="ulist">
+                <ul>
+                    <li>
+                        <p><code>hostname-url</code></p>
+                    </li>
+                    <li>
+                        <p><code>hostname-admin-url</code></p>
+                    </li>
+                </ul>
+            </div>
+            <div class="paragraph">
+                <p>More details can be found at the <a href="https://www.keycloak.org/server/hostname">Configuring the Hostname Guide</a>.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="improvements-to-code-kc-bat-code-when-running-keycloak-on-windows"><a class="anchor" href="#improvements-to-code-kc-bat-code-when-running-keycloak-on-windows"></a>Improvements to <code>kc.bat</code> when running Keycloak on Windows</h3>
+            <div class="paragraph">
+                <p>In this release, we are making important changes to <code>kc.bat</code> to give the same experience as when running on Linux.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="upgrade-of-embedded-h2-database"><a class="anchor" href="#upgrade-of-embedded-h2-database"></a>Upgrade of embedded H2 database</h3>
+            <div class="paragraph">
+                <p>Keycloak ships for development purposes with an H2 database driver. As it is intended for development purposes
+                    only, it should never be used in a production environment.</p>
+            </div>
+            <div class="paragraph">
+                <p>In this release, the H2 driver has been upgraded from version 1.x to version 2.x.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="feature-guard-for-hosting-the-keycloak-javascript-adapter"><a class="anchor" href="#feature-guard-for-hosting-the-keycloak-javascript-adapter"></a>Feature guard for hosting the Keycloak JavaScript adapter</h3>
+            <div class="paragraph">
+                <p>Applications are able to load <code>keycloak.js</code> directly from the Keycloak server. As it’s not considered a best-practice
+                    to load JavaScript libraries this way there is now a feature guard that allows disabling this ability.</p>
+            </div>
+            <div class="paragraph">
+                <p>In Keycloak 21 we will deprecate this option, and in Keycloak 22 we plan to completely remove the ability to load
+                    <code>keycloak.js</code> from the Keycloak server.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="otp-application-spi"><a class="anchor" href="#otp-application-spi"></a>OTP Application SPI</h3>
+            <div class="paragraph">
+                <p>In previous releases the list of OTP applications displayed to users was hard-coded in Keycloak. With the introduction of
+                    the OTP Application SPI it is now possible to disable built-in OTP applications, as well as adding custom OTP Applications.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="custom-identity-providers-can-now-set-an-icon-for-the-provider"><a class="anchor" href="#custom-identity-providers-can-now-set-an-icon-for-the-provider"></a>Custom Identity Providers can now set an icon for the provider</h3>
+            <div class="paragraph">
+                <p>A custom identity provider can now set the icon used on the login pages. Thanks to <a href="https://github.com/klausbetz">Klaus Betz</a>,
+                    who happens also to maintain
+                    <a href="https://github.com/klausbetz/apple-identity-provider-keycloak">an extension to Keycloak to support log in with AppleID</a>.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="fips-140-2-experimental-support"><a class="anchor" href="#fips-140-2-experimental-support"></a>FIPS 140-2 experimental support</h3>
+            <div class="paragraph">
+                <p>There is now experimental support for deploying Keycloak into a FIPS 140-2 enabled environment. There will be a blog post
+                    with the details shortly after the release with the details how you can try it. Feedback is welcome!</p>
+            </div>
+            <div class="paragraph">
+                <p>Thanks to <a href="https://github.com/david-rh">David Anderson</a>, who contributed parts of this feature. Also, thanks to
+                    <a href="https://github.com/sudeepd">Sudeep Das</a> and <a href="https://github.com/isaacjensen">Isaac Jensen</a> for their initial prototype
+                    effort, which was used as an inspiration.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="search-groups-by-attribute"><a class="anchor" href="#search-groups-by-attribute"></a>Search groups by attribute</h3>
+            <div class="paragraph">
+                <p>It is now possible to search groups by attribute through the Admin REST API. Thanks to
+                    <a href="https://github.com/Redhat-Alice">Alice</a> for this contribution.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="view-group-membership-in-the-account-console"><a class="anchor" href="#view-group-membership-in-the-account-console"></a>View group membership in the account console</h3>
+            <div class="paragraph">
+                <p>It is now possible to allow users to view their group memberships in the account console. Thanks to
+                    <a href="https://github.com/cgeorgilakis">cgeorgilakis</a> for this contribution.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="deprecated-methods-from-data-providers-and-models-were-removed"><a class="anchor" href="#deprecated-methods-from-data-providers-and-models-were-removed"></a>Deprecated methods from data providers and models were removed</h3>
+            <div class="paragraph">
+                <p>Several deprecated methods were removed from data providers and models. If not done already, their usage needs to be
+                    replaced with the corresponding replacement documented in Javadoc of Keycloak 19 release. See
+                    <a href="https://www.keycloak.org/docs/21.1.2/upgrading/">Upgrading Guide</a> for more details.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-19-0-0"><a class="anchor" href="#keycloak-19-0-0"></a>Keycloak 19.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="openid-connect-and-saml-adapters-end-of-life"><a class="anchor" href="#openid-connect-and-saml-adapters-end-of-life"></a>OpenID Connect and SAML Adapters End-of-life</h3>
+            <div class="paragraph">
+                <p>Some Keycloak OpenID Connect adapters have reached end-of-life and are not included in this release.</p>
+            </div>
+            <div class="sect3">
+                <h4 id="fuse-6-and-7-openid-connect"><a class="anchor" href="#fuse-6-and-7-openid-connect"></a>Fuse 6 and 7 (OpenID Connect)</h4>
+                <div class="paragraph">
+                    <p>Keycloak will no longer be providing adapters for Fuse 6 or 7. If you need adapters for Fuse please leverage <a href="https://access.redhat.com/products/red-hat-single-sign-on">Red Hat Single Sign-On</a> 7.x adapters.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="jboss-as-7-and-eap-6-openid-connect-and-saml"><a class="anchor" href="#jboss-as-7-and-eap-6-openid-connect-and-saml"></a>JBoss AS 7 and EAP 6 (OpenID Connect and SAML)</h4>
+                <div class="paragraph">
+                    <p>JBoss AS 7 has been unmaintained for a very long time. If you are still using JBoss AS 7 we recommend migrating to WildFly and leveraging the native OIDC support in WildFly.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Red Hat customers using Red Hat JBoss Enterprise Application Platform 6.x should use <a href="https://access.redhat.com/products/red-hat-single-sign-on">Red Hat Single Sign-On</a> 7.x adapters. These can be used in combination with the Keycloak server.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="jetty-9-2-and-9-3-openid-connect-and-saml"><a class="anchor" href="#jetty-9-2-and-9-3-openid-connect-and-saml"></a>Jetty 9.2 and 9.3 (OpenID Connect and SAML)</h4>
+                <div class="paragraph">
+                    <p>Jetty 9.2 reached end of life in 2018, while Jetty 9.3 reached end of life in 2020. If you are still using these versions we recommend upgrading to Jetty 9.4 as soon as possible.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="spring-boot-1-openid-connect"><a class="anchor" href="#spring-boot-1-openid-connect"></a>Spring Boot 1 (OpenID Connect)</h4>
+                <div class="paragraph">
+                    <p>Spring Boot 1.x reached end of life in 2019. If you are still using Spring Boot 1 we recommend upgrading to Spring Boot 2 as soon as possible.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="wildfly-legacy-security-layer-openid-connect-and-saml"><a class="anchor" href="#wildfly-legacy-security-layer-openid-connect-and-saml"></a>WildFly legacy security layer (OpenID Connect and SAML)</h4>
+                <div class="paragraph">
+                    <p>In WildFly 25 the legacy security layer was removed, going forward only Elytron will be supported. We recommend anyone using an older version of WildFly to upgrade and leverage native OIDC support in WildFly.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Red Hat customers using Red Hat JBoss Enterprise Application Platform 7.x should use <a href="https://access.redhat.com/products/red-hat-single-sign-on">Red Hat Single Sign-On</a> 7.x adapters. These can be used in combination with the Keycloak server.</p>
+                </div>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="new-admin-console-graduation"><a class="anchor" href="#new-admin-console-graduation"></a>New Admin Console graduation</h3>
+            <div class="paragraph">
+                <p>The new Admin Console is now graduated to the default admin console, with the old console now deprecated. The old console will be removed in Keycloak 21.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="changes-in-keycloak-storage"><a class="anchor" href="#changes-in-keycloak-storage"></a>Changes in Keycloak storage</h3>
+            <div class="paragraph">
+                <p>The Keycloak storage is changing, and the current storage, while still supported, will eventually be replaced with a brand-new implementation.
+                    This change brings better support for cloud-native storages, no-downtime abilities, and better support for implementing custom storages for additional areas apart from users.</p>
+            </div>
+            <div class="paragraph">
+                <p>It means several deep changes in the supported features of the current store will become <em>legacy</em> features.
+                    The legacy store and the new store cannot be used simultaneously; only one store can be active at a time.</p>
+            </div>
+            <div class="paragraph">
+                <p>The most visible change is that the User Storage SPI is incompatible with the new storage API, the Map Storage API.
+                    Thus, the User Storage SPI will be deprecated with legacy store and will move to a separate module called <code>keycloak-model-legacy</code>.
+                    This change impacts several areas, especially areas related to user federation and custom user providers.</p>
+            </div>
+            <div class="paragraph">
+                <p>Furthermore, APIs have been consolidated so that the details of the storage layer will be transparent to the REST service layer.
+                    Specifically, the services will not be able to differentiate cached and non-cached objects, nor specifically access federated versus local storage.</p>
+            </div>
+            <div class="paragraph">
+                <p>Hence, custom extensions that access objects in local storage or cache through <code>KeycloakSession</code>
+                    methods must be reviewed.
+                    See <a href="https://www.keycloak.org/docs/21.1.2/upgrading/">Upgrading Guide</a> for details.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="oidc-logout-changes"><a class="anchor" href="#oidc-logout-changes"></a>OIDC Logout changes</h3>
+            <div class="paragraph">
+                <p>In the previous release, we added support for OIDC logout. This release contains a few other fixes and polishing. The  highlights include:</p>
+            </div>
+            <div class="ulist">
+                <ul>
+                    <li>
+                        <p>Support for the <code>client_id</code> parameter, which was added in recent draft of the OIDC RP-Initiated Logout specification. As a result, no need exists to use the <code>Consent Required</code> flag of the
+                            client to show the logout confirmation screen.</p>
+                    </li>
+                    <li>
+                        <p>Configuration option <code>Valid Post Logout Redirect URIs</code> added to the OIDC client. This change is aligned with the OIDC specification, which allows you to use a different set of redirect URIs for redirect after login and logout.
+                            Value <code>+</code> used for <code>Valid Post Logout Redirect URIs</code> means that the logout will use the same set of redirect URIs as specified by the option of <code>Valid Redirect URIs</code>. This change also matches the default behavior when migrating
+                            from a previous version due to backwards compatibility.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="paragraph">
+                <p>For more details, see the <a href="https://www.keycloak.org/docs/21.1.2/server_admin/#_oidc-logout">Server Administration Guide</a>.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="update-email-workflow"><a class="anchor" href="#update-email-workflow"></a>Update Email Workflow</h3>
+            <div class="paragraph">
+                <p>There is new preview feature <code>UPDATE_EMAIL</code>. When it is enabled and corresponding flag enabled in the realm, the users will be required
+                    to confirm updating their email by clicking the link, which will be sent to their new email address. For more details, see the <a href="https://www.keycloak.org/docs/21.1.2/server_admin/#_update-email-workflow">Server Administration Guide</a>.
+                    Thanks to <a href="https://github.com/reda-alaoui">Réda Housni Alaoui</a> for the contribution.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="deprecated-code-poddisruptionbudget-code-in-the-legacy-keycloak-operator"><a class="anchor" href="#deprecated-code-poddisruptionbudget-code-in-the-legacy-keycloak-operator"></a>Deprecated <code>podDisruptionBudget</code> in the legacy Keycloak Operator</h3>
+            <div class="paragraph">
+                <p>With this release, we have deprecated <code>podDisruptionBudget</code> field in the Keycloak CR of the <a href="https://github.com/keycloak/keycloak-operator">legacy Keycloak Operator</a>.
+                    This optional field will be ignored when the Operator is deployed on Kubernetes version 1.25 and higher.</p>
+            </div>
+            <div class="paragraph">
+                <p>As a workaround, you can manually create the Pod Disruption Budget in your cluster, for example:</p>
+            </div>
+            <div class="listingblock">
+                <div class="content">
+<pre class="CodeRay highlight"><code data-lang="yaml"><span class="key">apiVersion</span>: <span class="string"><span class="content">policy/v1</span></span>
+<span class="key">kind</span>: <span class="string"><span class="content">PodDisruptionBudget</span></span>
+<span class="key">metadata</span>:
+  <span class="key">labels</span>:
+    <span class="key">app</span>: <span class="string"><span class="content">keycloak</span></span>
+  <span class="key">name</span>: <span class="string"><span class="content">keycloak</span></span>
+<span class="key">spec</span>:
+  <span class="key">maxUnavailable</span>: <span class="string"><span class="content">1</span></span>
+  <span class="key">selector</span>:
+    <span class="key">matchLabels</span>:
+      <span class="key">component</span>: <span class="string"><span class="content">keycloak</span></span></code></pre>
+                </div>
+            </div>
+            <div class="paragraph">
+                <p>See also the <a href="https://kubernetes.io/docs/tasks/run-application/configure-pdb/">Kubernetes Documentation</a>.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="initial-support-for-centralized-logging"><a class="anchor" href="#initial-support-for-centralized-logging"></a>Initial Support for centralized logging</h3>
+            <div class="paragraph">
+                <p>Starting with version 19, Keycloak supports sending logs using GELF to centralized logging solutions like ELK, EFK or Graylog out of the box.</p>
+            </div>
+            <div class="paragraph">
+                <p>You can find the documentation and examples to get you up and running quickly in the <a href="https://www.keycloak.org/server/logging#_centralized_logging_using_gelf">logging guide</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-18-0-0"><a class="anchor" href="#keycloak-18-0-0"></a>Keycloak 18.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="new-operator-preview"><a class="anchor" href="#new-operator-preview"></a>New Operator preview</h3>
+            <div class="paragraph">
+                <p>With this release, we’re introducing a brand new Keycloak Operator as a preview. Apart from being rewritten from
+                    scratch, the main user-facing change from the legacy Operator is the used Keycloak distribution – the new Operator
+                    uses the Quarkus distribution of Keycloak. With that, the API (in form of Custom Resource Definitions) has changed.
+                    For details, incl. installation and migration instructions, see the <a href="https://www.keycloak.org/guides#operator">Operator related guides</a>.</p>
+            </div>
+            <div class="paragraph">
+                <p>The <a href="https://github.com/keycloak/keycloak-operator">legacy Operator</a> will receive updates until Keycloak 20 when the Keycloak WildFly
+                    distribution reaches EOL.</p>
+            </div>
+            <div class="sect3">
+                <h4 id="operatorhub-versioning-scheme"><a class="anchor" href="#operatorhub-versioning-scheme"></a>OperatorHub versioning scheme</h4>
+                <div class="paragraph">
+                    <p>To avoid version conflicts with the legacy Operator, the 18.0.0 version of the new Operator is released as version
+                        <code>20.0.0-alpha.1</code> on OperatorHub. The legacy Operator versioning scheme remains the same, i.e. it is released as 18.0.0.</p>
+                </div>
+                <div class="paragraph">
+                    <p>The same pattern will apply for future Keycloak 18 and 19 releases, until version 20 where the legacy Operator
+                        reaches EOL.</p>
+                </div>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="new-admin-console-preview"><a class="anchor" href="#new-admin-console-preview"></a>New Admin Console preview</h3>
+            <div class="paragraph">
+                <p>The new Admin Console is now graduated to preview, with the plan for it to become the default admin console in Keycloak 19.</p>
+            </div>
+            <div class="paragraph">
+                <p>If you find any issues with the new console, or have some suggestions for improvements, please let us know through <a href="https://github.com/keycloak/keycloak/discussions/categories/new-admin-console">GitHub Discussions</a>.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="step-up-authentication"><a class="anchor" href="#step-up-authentication"></a>Step-up authentication</h3>
+            <div class="paragraph">
+                <p>Keycloak now supports Step-up authentication. This feature was added in Keycloak 17, and was further polished in this version.</p>
+            </div>
+            <div class="paragraph">
+                <p>For more details, see <a href="https://www.keycloak.org/docs/21.1.2/server_admin/#_step-up-flow">Server Administration Guide</a>.</p>
+            </div>
+            <div class="paragraph">
+                <p>Thanks to <a href="https://github.com/CorneliaLahnsteiner">Cornelia Lahnsteiner</a> and <a href="https://github.com/romge">Georg Romstorfer</a> for the contribution.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="client-secret-rotation"><a class="anchor" href="#client-secret-rotation"></a>Client secret rotation</h3>
+            <div class="paragraph">
+                <p>Keycloak now supports Client Secret Rotation through customer policies. This feature is now available as a preview feature and allows that confidential clients can be provided with realm policies allowing the use up to two secrets simultaneously.</p>
+            </div>
+            <div class="paragraph">
+                <p>For more details, see <a href="https://www.keycloak.org/docs/21.1.2/server_admin/#_secret_rotation">Server Administration Guide</a>.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="recovery-codes"><a class="anchor" href="#recovery-codes"></a>Recovery Codes</h3>
+            <div class="paragraph">
+                <p>Recovery Codes as another way to do two-factor authentication is now available as a preview feature.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="openid-connect-logout-improvements"><a class="anchor" href="#openid-connect-logout-improvements"></a>OpenID Connect Logout Improvements</h3>
+            <div class="paragraph">
+                <p>Some fixes and improvements were made to make sure that Keycloak is now fully compliant with all the OpenID Connect logout specifications:</p>
+            </div>
+            <div class="ulist">
+                <ul>
+                    <li>
+                        <p>OpenID Connect RP-Initiated Logout 1.0</p>
+                    </li>
+                    <li>
+                        <p>OpenID Connect Front-Channel Logout 1.0</p>
+                    </li>
+                    <li>
+                        <p>OpenID Connect Back-Channel Logout 1.0</p>
+                    </li>
+                    <li>
+                        <p>OpenID Connect Session Management 1.0</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="paragraph">
+                <p>For more details, see <a href="https://www.keycloak.org/docs/21.1.2/server_admin/#_oidc-logout">Server Administration Guide</a>.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="webauthn-improvements"><a class="anchor" href="#webauthn-improvements"></a>WebAuthn improvements</h3>
+            <div class="paragraph">
+                <p>Keycloak now supports WebAuthn id-less authentication. This feature allows that WebAuthn Security Key will identify the user during authentication as long as the
+                    security key supports Resident Keys. For more details, see <a href="https://www.keycloak.org/docs/21.1.2/server_admin/#_webauthn_loginless">Server Administration Guide</a>.
+                    Thanks to <a href="https://github.com/vanrar68">Joaquim Fellmann</a> for the contribution.</p>
+            </div>
+            <div class="paragraph">
+                <p>There are more WebAuthn improvements and fixes in addition to that.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="the-deprecated-code-upload-script-code-feature-was-removed"><a class="anchor" href="#the-deprecated-code-upload-script-code-feature-was-removed"></a>The deprecated <code>upload-script</code> feature was removed</h3>
+            <div class="paragraph">
+                <p>The <code>upload-script</code> feature has been marked as deprecated for a very long time. In this release, it was completely removed, and it is no longer supported.</p>
+            </div>
+            <div class="paragraph">
+                <p>If you are using any of these capabilities:</p>
+            </div>
+            <div class="ulist">
+                <ul>
+                    <li>
+                        <p>OpenID Connect Script Mapper</p>
+                    </li>
+                    <li>
+                        <p>Script Authenticator (Authentication Execution)</p>
+                    </li>
+                    <li>
+                        <p>JavaScript Policies</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="paragraph">
+                <p>You should consider reading this <a href="https://www.keycloak.org/docs/latest/server_development/#_script_providers">documentation</a> in order to understand how to still rely
+                    on these capabilities but deploying your scripts to the server rather than managing them through the management interfaces.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="session-limits"><a class="anchor" href="#session-limits"></a>Session limits</h3>
+            <div class="paragraph">
+                <p>Keycloak now supports limits on the number of sessions a user can have. Limits can be placed at the realm level or at the client level.</p>
+            </div>
+            <div class="paragraph">
+                <p>For more details, see <a href="https://www.keycloak.org/docs/21.1.2/server_admin/#_user_session_limits">Server Administration Guide</a>.
+                    Thanks to <a href="https://github.com/mfdewit">Mauro de Wit</a> for the contribution.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="saml-ecp-profile-is-disabled-by-default"><a class="anchor" href="#saml-ecp-profile-is-disabled-by-default"></a>SAML ECP Profile is disabled by default</h3>
+            <div class="paragraph">
+                <p>To mitigate the risk of abusing SAML ECP Profile, Keycloak now blocks
+                    this flow for all SAML clients that do not allow it explicitly. The profile
+                    can be enabled using <em>Allow ECP Flow</em> flag within client configuration,
+                    see  <a href="https://www.keycloak.org/docs/21.1.2/server_admin/#_client-saml-configuration">Server Administration Guide</a>.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="quarkus-distribution"><a class="anchor" href="#quarkus-distribution"></a>Quarkus distribution</h3>
+            <div class="sect3">
+                <h4 id="import-realms-at-startup"><a class="anchor" href="#import-realms-at-startup"></a>Import realms at startup</h4>
+                <div class="paragraph">
+                    <p>The Keycloak Quarkus distribution now supports importing your realms directly at start-up. For more information, check the corresponding <a href="https://www.keycloak.org/server/importExport">guide</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="json-and-file-logging-improvements"><a class="anchor" href="#json-and-file-logging-improvements"></a>JSON and File Logging improvements</h4>
+                <div class="paragraph">
+                    <p>The Keycloak Quarkus distribution now initially supports logging to a File and logging structured data using JSON.</p>
+                </div>
+                <div class="paragraph">
+                    <p>For more information on the improvements, check the corresponding <a href="https://www.keycloak.org/server/logging">guide</a>.</p>
+                </div>
+                <div class="sect4">
+                    <h5 id="environment-variable-expansion-for-values-in-keycloak-conf"><a class="anchor" href="#environment-variable-expansion-for-values-in-keycloak-conf"></a>Environment variable expansion for values in keycloak.conf</h5>
+                    <div class="paragraph">
+                        <p>The Keycloak Quarkus distribution now supports expanding values in keycloak.conf from environment variables.</p>
+                    </div>
+                    <div class="paragraph">
+                        <p>For more information, check the corresponding <a href="https://www.keycloak.org/server/configuration">guide</a>.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="new-option-db-url-port"><a class="anchor" href="#new-option-db-url-port"></a>New Option db-url-port</h4>
+                <div class="paragraph">
+                    <p>You can now change the port of your jdbc connection string explicitly by setting the new <code>db-url-port</code> configuration option. As for the other convenience options, this option will be overridden by the value of a full <code>db-url</code>, if set.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="split-metrics-enabled-option-into-health-enabled-and-metrics-enabled"><a class="anchor" href="#split-metrics-enabled-option-into-health-enabled-and-metrics-enabled"></a>Split metrics-enabled option into health-enabled and metrics-enabled</h4>
+                <div class="paragraph">
+                    <p>The <code>metrics-enabled</code> option now only enables the metrics for Keycloak. To enable the readiness and liveness probe, there’s the new build option <code>health-enabled</code>. This allows more fine-grained usage of these options.</p>
+                </div>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="other-improvements-2"><a class="anchor" href="#other-improvements-2"></a>Other improvements</h3>
+            <div class="ulist">
+                <ul>
+                    <li>
+                        <p>Account console alignments with latest PatternFly release.</p>
+                    </li>
+                    <li>
+                        <p>Support for encrypted User Info endpoint response. Thanks to <a href="https://github.com/giacomoa">Giacomo Altiero</a></p>
+                    </li>
+                    <li>
+                        <p>Support for the algorithm RSA-OAEP with A256GCM used for encryption keys. Thanks to <a href="https://github.com/fbrissi">Filipe Bojikian Rissi</a></p>
+                    </li>
+                    <li>
+                        <p>Support for login with GitHub Enterprise server. Thanks to <a href="https://github.com/nngo">Neon Ngo</a></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-17-0-0"><a class="anchor" href="#keycloak-17-0-0"></a>Keycloak 17.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights"><a class="anchor" href="#highlights"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="quarkus-distribution-is-now-fully-supported"><a class="anchor" href="#quarkus-distribution-is-now-fully-supported"></a>Quarkus distribution is now fully supported</h4>
+                <div class="paragraph">
+                    <p>The default Keycloak distribution is now based on Quarkus. The new distribution is faster, leaner, and a lot easier to configure!</p>
+                </div>
+                <div class="paragraph">
+                    <p>We appreciate migrating from the WildFly distribution is not going to be straightforward for everyone, since how you start and configure Keycloak has radically changed. With that in mind we will continue to support the WildFly distribution until June 2022.</p>
+                </div>
+                <div class="paragraph">
+                    <p>For information on how to migrate to the new distribution check out the <a href="https://www.keycloak.org/migration/migrating-to-quarkus">Quarkus Migration Guide</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="quarkus-distribution-updates"><a class="anchor" href="#quarkus-distribution-updates"></a>Quarkus distribution updates</h4>
+                <div class="paragraph">
+                    <p>A lot of effort went into polishing and improving the Quarkus distribution to make it as good as an experience as possible. A few highlights include:</p>
+                </div>
+                <div class="ulist">
+                    <ul>
+                        <li>
+                            <p>A new approach to documentation in form of server guides to help you install and configure Keycloak</p>
+                        </li>
+                        <li>
+                            <p>Upgraded Quarkus to 2.7.0.Final</p>
+                        </li>
+                        <li>
+                            <p>Configuration file is no longer Java specific, and aligns configuration keys with CLI arguments</p>
+                        </li>
+                        <li>
+                            <p>Clearer separation between <code>build options</code> and <code>runtime configuration</code>.</p>
+                        </li>
+                        <li>
+                            <p><code>h2-mem</code> and <code>h2-file</code> databases renamed to <code>dev-mem</code> and <code>dev-file</code>.</p>
+                        </li>
+                        <li>
+                            <p>Simplified enabling and disabling features</p>
+                        </li>
+                        <li>
+                            <p>Custom, and unsupported, Quarkus configuration is done through <code>conf/quarkus.properties</code>.</p>
+                        </li>
+                        <li>
+                            <p>Ability to add custom Java Options via JAVA_OPTS_APPEND (thanks to <a href="https://github.com/dasniko">dasniko</a>)</p>
+                        </li>
+                        <li>
+                            <p>Initial logging capabilities</p>
+                        </li>
+                        <li>
+                            <p>Initial support for Cross-DC</p>
+                        </li>
+                        <li>
+                            <p>User-defined profiles are no longer supported but using different configuration files to achieve the same goal</p>
+                        </li>
+                        <li>
+                            <p>Quickstarts updated to use the new distribution
+                                == Other improvements</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sect4">
+                    <h5 id="offline-sessions-lazy-loaded"><a class="anchor" href="#offline-sessions-lazy-loaded"></a>Offline sessions lazy loaded</h5>
+                    <div class="paragraph">
+                        <p>The offline sessions are now lazily fetched from the database by default instead of preloading during the server startup.
+                            To change the default behavior, see <a href="https://www.keycloak.org/docs/21.1.2/server_admin/#offline-sessions-preloading">Server Administration Guide</a>.</p>
+                    </div>
+                </div>
+                <div class="sect4">
+                    <h5 id="improved-user-search"><a class="anchor" href="#improved-user-search"></a>Improved User Search</h5>
+                    <div class="paragraph">
+                        <p>Keycloak now supports a glob-like syntax for the user search when listing users in the Admin Console,
+                            which allows for three different types of searches: prefix (<code>foo*</code> which became the default search), infix (<code>*foo*</code>), and exact <code>"foo"</code>)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-16-1-0"><a class="anchor" href="#keycloak-16-1-0"></a>Keycloak 16.1.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-2"><a class="anchor" href="#highlights-2"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="upgrade-to-wildfly-26-0-0"><a class="anchor" href="#upgrade-to-wildfly-26-0-0"></a>Upgrade to Wildfly 26.0.0</h4>
+                <div class="paragraph">
+                    <p>Keycloak server was upgraded to use Wildfly 26.0.0.Final as the underlying container.</p>
+                </div>
+                <div class="paragraph">
+                    <p>For more information on WildFly 26 refer to the <a href="https://www.wildfly.org/news/2021/12/16/WildFly26-Final-Released/">WildFly 26 release notes</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-16-0-0"><a class="anchor" href="#keycloak-16-0-0"></a>Keycloak 16.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-3"><a class="anchor" href="#highlights-3"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="upgrade-to-wildfly-25-0-1"><a class="anchor" href="#upgrade-to-wildfly-25-0-1"></a>Upgrade to Wildfly 25.0.1</h4>
+                <div class="paragraph">
+                    <p>Keycloak server was upgraded to use Wildfly 25.0.1.Final as the underlying container.</p>
+                </div>
+                <div class="paragraph">
+                    <p>WildFly 25 drops support for the legacy security subsystem, which is being replaced fully by Elytron. This requires significant changes to how Keycloak is configured. Please, refer to the migration guide for more details.</p>
+                </div>
+                <div class="paragraph">
+                    <p>For more information on WildFly 25 refer to the <a href="https://www.wildfly.org/news/2021/10/05/WildFly25-Final-Released/">WildFly 25 release notes</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="upgrade-to-quarkus-2-5-3"><a class="anchor" href="#upgrade-to-quarkus-2-5-3"></a>Upgrade to Quarkus 2.5.3</h4>
+                <div class="paragraph">
+                    <p>Keycloak.X Quarkus preview distribution was upgraded to Quarkus 2.5.3.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-15-1-0"><a class="anchor" href="#keycloak-15-1-0"></a>Keycloak 15.1.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-4"><a class="anchor" href="#highlights-4"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="quarkus-distribution-preview"><a class="anchor" href="#quarkus-distribution-preview"></a>Quarkus distribution preview</h4>
+                <div class="paragraph">
+                    <p>Without comparison the biggest highlight of this release is all the improvements that have been made to the Quarkus distribution. So many in fact, that it will be hard to list them all.</p>
+                </div>
+                <div class="paragraph">
+                    <p>The CLI has been polished to hell and back, and we believe it now provides a very simple and convenient approach to configuring and running Keycloak. It’s almost so simple that documentation shouldn’t be needed.</p>
+                </div>
+                <div class="paragraph">
+                    <p>To get started, just unpack the distribution, then type <code>bin/kc.[sh|bat] -h</code> to discover awesomeness!</p>
+                </div>
+                <div class="paragraph">
+                    <p>That doesn’t mean we don’t plan to provide documentation for configuring Keycloak, but it didn’t quite make it this time around. In lack of documentation expect a blog post to follow the release introducing all the changes to the Quarkus distribution, as well as an overview on how to use it.</p>
+                </div>
+                <div class="paragraph">
+                    <p>We are rapidly moving towards making the Quarkus distribution our default distribution, and will soon deprecate the WildFly distribution. With this in mind it is important that as many people as possible give it a test-run and provide us with feedback if you find any usability issues, are not able to configure something with it, or if you discover any bugs.</p>
+                </div>
+                <div class="paragraph">
+                    <p>We’d love to hear your thoughts and get your feedback in <a href="https://github.com/keycloak/keycloak/discussions/8654">GitHub Discussions</a>!</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="new-admin-console-preview-2"><a class="anchor" href="#new-admin-console-preview-2"></a>New Admin Console preview</h4>
+                <div class="paragraph">
+                    <p>The new admin console is shaping up really nicely, and a preview is included in the main distribution. It is not quite feature complete yet, but there are still loads of things to try out.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="wildfly-update"><a class="anchor" href="#wildfly-update"></a>WildFly update</h4>
+                <div class="paragraph">
+                    <p>Upgrading from WildFly 23 to WildFly 25 has taken a lot longer than we would have liked. We’re still working hard on this and are hoping to release Keycloak 16 as soon as possible with the upgrade, but as we wanted to get the updates to the Quarkus distribution out there we are doing this release in the meantime.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="wildfly-adapter-deprecation"><a class="anchor" href="#wildfly-adapter-deprecation"></a>WildFly adapter deprecation</h4>
+                <div class="paragraph">
+                    <p>In WildFly 25 there is now excellent native OpenID Connect support without the need for the Keycloak adapter. With this in mind we are deprecating our WildFly adapter and will not support WildFly 25, but it will be around for a while for older WildFly versions and Red Hat JBoss Enterprise Application Platform 7.y.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="spring-security-and-boot-adapter-deprecation"><a class="anchor" href="#spring-security-and-boot-adapter-deprecation"></a>Spring Security and Boot adapter deprecation</h4>
+                <div class="paragraph">
+                    <p>A long time ago, with Spring Security 5.0, there is now native support for OAuth 2.0 and OpenID Connect in Spring. With this in mind now is the time to start deprecating our Spring Boot and Security adapters.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="openid-connect-front-channel-logout-support"><a class="anchor" href="#openid-connect-front-channel-logout-support"></a>OpenID Connect Front-Channel Logout Support</h4>
+                <div class="paragraph">
+                    <p>Keycloak now supports <a href="https://openid.net/specs/openid-connect-frontchannel-1_0.html">OpenID Connect Front-Channel Logout 1.0</a>.</p>
+                </div>
+                <div class="paragraph">
+                    <p>For more details, take a look at <a href="https://www.keycloak.org/docs/21.1.2/server_admin/#_oidc-logout">Server Administration Guide</a>.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Thanks to <a href="https://github.com/rhyamada">Ronaldo Yamada</a> for the contribution.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="deprecated-features-in-the-keycloak-operator"><a class="anchor" href="#deprecated-features-in-the-keycloak-operator"></a>Deprecated features in the Keycloak Operator</h4>
+                <div class="paragraph">
+                    <p>With this release, we have deprecated and/or marked as unsupported some features in the Keycloak Operator. This
+                        concerns the Backup CRD and the operator managed Postgres Database.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-15-0-1"><a class="anchor" href="#keycloak-15-0-1"></a>Keycloak 15.0.1</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-5"><a class="anchor" href="#highlights-5"></a>Highlights</h3>
+            <div class="paragraph">
+                <p>This release contains some important bug fixes. In addition, We would like to thank <a href="https://github.com/leandrobortoli">Leandro José de Bortoli</a> for his contributions to the
+                    FAPI related functionalities such as JARM support and improvements in CIBA.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-15-0-0"><a class="anchor" href="#keycloak-15-0-0"></a>Keycloak 15.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-6"><a class="anchor" href="#highlights-6"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="financial-grade-api-fapi-improvements-fapi-ciba-and-open-banking-brasil"><a class="anchor" href="#financial-grade-api-fapi-improvements-fapi-ciba-and-open-banking-brasil"></a>Financial-grade API (FAPI) Improvements, FAPI CIBA and Open Banking Brasil</h4>
+                <div class="paragraph">
+                    <p>The Keycloak server has improved support for the Financial-grade API (FAPI). More specifically, Keycloak is now compliant with FAPI CIBA and with OpenBanking Brasil.
+                        We also have support for CIBA ping mode. Thanks to <a href="https://github.com/tnorimat">Takashi Norimatsu</a>, who did most of the work on FAPI CIBA and who is
+                        continually doing a really awesome job for the Keycloak project. Also thanks to <a href="https://github.com/DmitryMishchuk">Dmytro Mishchuk</a>,
+                        <a href="https://github.com/andriimurashkin">Andrii Murashkin</a>, <a href="https://github.com/HryhoriiHevorkian">Hryhorii Hevorkian</a> and <a href="https://github.com/leandrobortoli">Leandro José de Bortoli</a>, who did a great deal of
+                        the work on the FAPI compliance as well. Finally thanks to all the members of the <a href="https://github.com/keycloak/kc-sig-fapi/blob/main/members.adoc">FAPI Special interest group</a> for their help and feedback.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-14-0-0"><a class="anchor" href="#keycloak-14-0-0"></a>Keycloak 14.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-7"><a class="anchor" href="#highlights-7"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="client-policies-and-financial-grade-api-fapi-support"><a class="anchor" href="#client-policies-and-financial-grade-api-fapi-support"></a>Client Policies and Financial-grade API (FAPI) Support</h4>
+                <div class="paragraph">
+                    <p>The Keycloak server has now official support for client policies and Financial-grade API (FAPI). This capability was previewed in earlier versions, but now
+                        it is more polished and properly documented. Thanks to <a href="https://github.com/tnorimat">Takashi Norimatsu</a>, who did most of the work on this. Also thanks
+                        to <a href="https://github.com/DmitryMishchuk">Dmytro Mishchuk</a>, <a href="https://github.com/andriimurashkin">Andrii Murashkin</a> and <a href="https://github.com/HryhoriiHevorkian">Hryhorii Hevorkian</a>, who did a great deal of the work on this feature as well.
+                        Finally thanks to all the members of the <a href="https://github.com/keycloak/kc-sig-fapi/blob/main/members.adoc">FAPI Special interest group</a> for their help and feedback.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="improvements-to-user-profile-spi-and-support-for-declarative-configuration"><a class="anchor" href="#improvements-to-user-profile-spi-and-support-for-declarative-configuration"></a>Improvements to User Profile SPI and support for declarative configuration</h4>
+                <div class="paragraph">
+                    <p>In this version, there were several improvements to the User Profile SPI in order
+                        to prepare the ground on how users profiles are managed in Keycloak.</p>
+                </div>
+                <div class="paragraph">
+                    <p>One of these improvements is the support for configuring user profiles through the administration console. For more
+                        details proceed to <a href="https://www.keycloak.org/docs/21.1.2/server_admin/#user-profile">Server Administration Guide</a></p>
+                </div>
+                <div class="paragraph">
+                    <p>Thanks to the community and all the individuals involved in this effort.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="improvements-to-offline-sessions"><a class="anchor" href="#improvements-to-offline-sessions"></a>Improvements to offline sessions</h4>
+                <div class="paragraph">
+                    <p>Offline session preloading has been improved and should be faster thanks to <a href="https://github.com/Flintholm">Peter Flintholm</a>.</p>
+                </div>
+                <div class="paragraph">
+                    <p>As a preview feature, offline session preloading can be skipped in favor of lazy loading thanks
+                        to <a href="https://github.com/thomasdarimont">Thomas Darimont</a>'s efforts. This feature has to be explicitly
+                        activated in the server configuration, see Server administration guide for details.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="other-improvements-3"><a class="anchor" href="#other-improvements-3"></a>Other improvements</h4>
+                <div class="ulist">
+                    <ul>
+                        <li>
+                            <p>The support for configuring maximum number of active authentication sessions. The default value is set to 300 authentication sessions (browser tabs) per a browser’s session</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-13-0-0"><a class="anchor" href="#keycloak-13-0-0"></a>Keycloak 13.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-8"><a class="anchor" href="#highlights-8"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="upgrade-to-wildfly-23"><a class="anchor" href="#upgrade-to-wildfly-23"></a>Upgrade to Wildfly 23</h4>
+                <div class="paragraph">
+                    <p>The Keycloak server was upgraded to use Wildfly 23.0.2.Final as the underlying container.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="oauth-2-0-device-authorization-grant-rfc-8628"><a class="anchor" href="#oauth-2-0-device-authorization-grant-rfc-8628"></a>OAuth 2.0 Device Authorization Grant (RFC 8628)</h4>
+                <div class="paragraph">
+                    <p>Support for OAuth 2.0 Device Authorization Grant is now available.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Thanks to
+                        Hiroyuki Wada, <a href="https://github.com/splatch">Łukasz Dywicki</a>
+                        and <a href="https://github.com/Michito-Okai">Michito Okai</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="openid-connect-client-initiated-backchannel-authentication-ciba"><a class="anchor" href="#openid-connect-client-initiated-backchannel-authentication-ciba"></a>OpenID Connect Client Initiated Backchannel Authentication (CIBA)</h4>
+                <div class="paragraph">
+                    <p>Support for OpenID Connect Client Initiated Backchannel Authentication (CIBA) is now available.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Thanks to <a href="https://github.com/tnorimat">Takashi Norimatsu</a>,
+                        <a href="https://github.com/andriimurashkin">Andrii Murashkin</a>, <a href="https://github.com/c4r1570p4e">Christophe Lannoy</a> and members of the FAPI WG for the implementation and feedback.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="saml-artifact-binding-in-server-to-client-communication"><a class="anchor" href="#saml-artifact-binding-in-server-to-client-communication"></a>SAML Artifact binding in server to client communication</h4>
+                <div class="paragraph">
+                    <p>Keycloak now supports communication with clients using SAML <em>Artifact</em> binding. A new <code>Force Artifact Binding</code> option
+                        was introduced in the client configuration, that forces communication with the client using artifact messages. For more
+                        details proceed to <a href="https://www.keycloak.org/docs/21.1.2/server_admin/#_client-saml-configuration">Server Administration Guide</a>. Please note, that with
+                        this version, Keycloak SAML client adapter does NOT support Artifact binding.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Thanks to <a href="https://github.com/AlistairDoswald">AlistairDoswald</a> and <a href="https://github.com/harture">harture</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="support-pkce-for-identity-brokering"><a class="anchor" href="#support-pkce-for-identity-brokering"></a>Support PKCE for identity brokering</h4>
+                <div class="paragraph">
+                    <p>Keycloak can now leverage PKCE when brokering to an external OpenID Connect IdP.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Thanks to <a href="https://github.com/thomasdarimont">thomasdarimont</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="default-roles-processing-improvement"><a class="anchor" href="#default-roles-processing-improvement"></a>Default roles processing improvement</h4>
+                <div class="paragraph">
+                    <p>Default roles are now internally stored as composite roles of a new role usually named <code>default-roles-&lt;realmName&gt;</code>. Instead of assigning
+                        both realm and all client default roles directly to newly created users or users imported through Identity Brokering, just the role is
+                        assigned to them and the rest of default roles are assigned as effective roles. This change improves performance of default roles processing,
+                        especially with larger number of clients, because it is no longer necessary to go through all clients.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-12-0-0"><a class="anchor" href="#keycloak-12-0-0"></a>Keycloak 12.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-9"><a class="anchor" href="#highlights-9"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="keycloak-x-distribution-preview"><a class="anchor" href="#keycloak-x-distribution-preview"></a>Keycloak.X distribution preview</h4>
+                <div class="paragraph">
+                    <p>Introduction a preview of the new and upcoming Keycloak.X distribution. This distribution is powered by Quarkus, bringing
+                        significant improvements to startup time and memory consumption, as well as making it a lot easier to configure Keycloak.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="new-account-console-is-now-the-default"><a class="anchor" href="#new-account-console-is-now-the-default"></a>New Account console is now the default</h4>
+                <div class="paragraph">
+                    <p>The new account console is no longer a preview feature and is now the default account console in Keycloak. The old account
+                        console will stay around for a while. For those that have a custom theme for the old account console the old console
+                        will be used by default, giving you the time to update your custom theme to the new account console.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="openid-connect-back-channel-logout"><a class="anchor" href="#openid-connect-back-channel-logout"></a>OpenID Connect Back-Channel Logout</h4>
+                <div class="paragraph">
+                    <p>Support for OpenID Connect Back-Channel Logout is now available, thanks to <a href="https://github.com/DaSmoo">DaSmoo</a> and
+                        <a href="https://github.com/benjamin37">benjamin37</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="upgrade-to-wildfly-21"><a class="anchor" href="#upgrade-to-wildfly-21"></a>Upgrade to Wildfly 21</h4>
+                <div class="paragraph">
+                    <p>The Keycloak server was upgraded to use Wildfly 21 as the underlying container.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="ability-to-request-authncontext-in-saml-identity-provider"><a class="anchor" href="#ability-to-request-authncontext-in-saml-identity-provider"></a>Ability to request AuthnContext in SAML identity provider</h4>
+                <div class="paragraph">
+                    <p>Support for specification of AuthnContext section in authentication requests issued by SAML identity provider has been added.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Thanks to <a href="https://github.com/lscorcia">lscorcia</a></p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="fapi-rw-support-and-initial-support-to-client-policies"><a class="anchor" href="#fapi-rw-support-and-initial-support-to-client-policies"></a>FAPI RW support and initial support to Client policies</h4>
+                <div class="paragraph">
+                    <p>There was lots of the work done to have support for Financial-grade API Read and Write API Security Profile (FAPI RW). This is available
+                        with the usage of Client policies and it is still in the preview state. You can expect more polishing in the next releases.
+                        Thanks to <a href="https://github.com/tnorimat">Takashi Norimatsu</a> and all the members of the <a href="https://github.com/keycloak/kc-sig-fapi">FAPI Special interest group</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="upgrade-login-theme-to-patternfly-4"><a class="anchor" href="#upgrade-login-theme-to-patternfly-4"></a>Upgrade login theme to PatternFly 4</h4>
+                <div class="paragraph">
+                    <p>The Keycloak login theme components have been upgraded to PatternFly 4.
+                        The old PatternFly 3 runs simultaneously with the new one, so it’s possible to have PF3 components there.</p>
+                </div>
+                <div class="paragraph">
+                    <p>There are also design changes in the login theme for better user experience.
+                        You can even define an icon for your custom Identity providers.
+                        For details, please refer to the <a href="https://www.keycloak.org/docs/21.1.2/server_development/#custom-identity-providers-icons">docs</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="gatekeeper-eol"><a class="anchor" href="#gatekeeper-eol"></a>Gatekeeper EOL</h4>
+                <div class="paragraph">
+                    <p>Gatekeeper reached end of life, in November 21. This means that we no longer support, or update it. The announcement is available <a href="https://www.keycloak.org/2020/08/sunsetting-louketo-project.adoc">here</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="other-improvements-4"><a class="anchor" href="#other-improvements-4"></a>Other improvements</h4>
+                <div class="ulist">
+                    <ul>
+                        <li>
+                            <p>Support for OAuth2 Client Credentials grant without refresh token and without user session. Thanks to <a href="https://github.com/thomasdarimont">Thomas Darimont</a></p>
+                        </li>
+                        <li>
+                            <p>Support for send access tokens to the OAuth2 Revocation endpoint</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-11-0-0"><a class="anchor" href="#keycloak-11-0-0"></a>Keycloak 11.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-10"><a class="anchor" href="#highlights-10"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="ldapv3-password-modify-operation"><a class="anchor" href="#ldapv3-password-modify-operation"></a>LDAPv3 password modify operation</h4>
+                <div class="paragraph">
+                    <p>Support for LDAPv3 password modify operation was added. Also the ability in the admin console to request metadata from the configured
+                        LDAP server to see if it supports LDAPv3 password modify operation.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Thanks to <a href="https://github.com/cachescrubber">cachescrubber</a></p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="namespace-support-for-ldap-group-mapper"><a class="anchor" href="#namespace-support-for-ldap-group-mapper"></a>Namespace support for LDAP group mapper</h4>
+                <div class="paragraph">
+                    <p>Namespace support for LDAP group mapper allows you to map groups from LDAP under specified branch (namespace) of the Keycloak groups tree.
+                        Previously groups from LDAP were always added as the top level groups in Keycloak.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Thanks to <a href="https://github.com/tjuerge">Torsten Juergeleit</a></p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="upgrade-to-wildfly-20"><a class="anchor" href="#upgrade-to-wildfly-20"></a>Upgrade to WildFly 20</h4>
+                <div class="paragraph">
+                    <p>Keycloak server was upgraded to use WildFly 20.0.1.Final under the covers. For more details,
+                        please take a look at <a href="https://www.keycloak.org/docs/latest/upgrading/">Upgrading Guide</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="saml-post-binding-is-broken-in-the-latest-versions-of-browsers"><a class="anchor" href="#saml-post-binding-is-broken-in-the-latest-versions-of-browsers"></a>SAML POST binding is broken in the latest versions of browsers</h4>
+                <div class="paragraph">
+                    <p>The <code>SameSite</code> value <code>None</code> for <code>JSESSIONID</code> cookie is necessary for correct behavior of the Keycloak SAML adapter.
+                        Usage of a different value is causing resetting of the container’s session with each request to Keycloak, when
+                        the SAML POST binging is used. Refer to the following steps for
+                        <a href="https://www.keycloak.org/docs/21.1.2/securing_apps/#_saml-jboss-adapter-samesite-setting">Wildfly</a> and
+                        <a href="https://www.keycloak.org/docs/21.1.2/securing_apps/#_saml-tomcat-adapter-samesite-setting">Tomcat</a> to keep the correct behavior. Notice, that this
+                        workaround should be working also with the previous versions of the adapter.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="other-improvements-5"><a class="anchor" href="#other-improvements-5"></a>Other improvements</h4>
+                <div class="ulist">
+                    <ul>
+                        <li>
+                            <p>Support for client offline session lifespan. Thanks to <a href="https://github.com/y-tabata">Yoshiyuki Tabata</a></p>
+                        </li>
+                        <li>
+                            <p>Czech translation. Thanks to <a href="https://github.com/jakubknejzlik">Jakub Knejzlík</a></p>
+                        </li>
+                        <li>
+                            <p>Possibility to fetch additional fields from the Facebook identity provider. Thanks to <a href="https://github.com/BartoszSiemienczuk">Bartosz Siemieńczuk</a></p>
+                        </li>
+                        <li>
+                            <p>Support for AES 192 and AES 256 algorithms used for signed and encrypted ID tokens. Thanks to <a href="https://github.com/tnorimat">Takashi Norimatsu</a></p>
+                        </li>
+                        <li>
+                            <p>Ability to specify signature algorithm in Signed JWT Client Authentication. Thanks to <a href="https://github.com/tnorimat">Takashi Norimatsu</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-10-0-0"><a class="anchor" href="#keycloak-10-0-0"></a>Keycloak 10.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-11"><a class="anchor" href="#highlights-11"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="identity-brokering-sync-mode"><a class="anchor" href="#identity-brokering-sync-mode"></a>Identity Brokering Sync Mode</h4>
+                <div class="paragraph">
+                    <p>With Identity Brokering Sync Mode it is now possible to control if user profiles are updated on first login, or
+                        every login from an external Identity Provider. It is also possible to override this behaviour on individual mappers.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Thanks to <a href="https://github.com/Martin-Idel-SI">Martin Idel</a></p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="client-session-timeout-for-openid-connect-oauth-2-0"><a class="anchor" href="#client-session-timeout-for-openid-connect-oauth-2-0"></a>Client Session Timeout for OpenID Connect / OAuth 2.0</h4>
+                <div class="paragraph">
+                    <p>Typically, an SSO session last for days if not months, while individual client sessions should ideally be a lot shorter.
+                        With the introduction of client session timeout it is now possible to configure a separate timeout for individual clients,
+                        as well as a default for all clients within a realm.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Thanks to <a href="https://github.com/y-tabata">Yoshiyuki Tabata</a></p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="oauth-2-0-token-revocation-rfc-7009"><a class="anchor" href="#oauth-2-0-token-revocation-rfc-7009"></a>OAuth 2.0 Token Revocation (RFC 7009)</h4>
+                <div class="paragraph">
+                    <p>For applications that use Keycloak as an OAuth 2.0 Authorization Server there is now support to revoke refresh tokens
+                        through the token revocation endpoint.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Thanks to <a href="https://github.com/y-tabata">Yoshiyuki Tabata</a></p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="security-headers-spi-and-response-filter"><a class="anchor" href="#security-headers-spi-and-response-filter"></a>Security Headers SPI and Response Filter</h4>
+                <div class="paragraph">
+                    <p>A new SPI was introduced to allow better flexibility when setting security related headers on responses. This provides
+                        a cleaner implementation within Keycloak, but also allows full customisation if needed. Security headers are now set
+                        by a response filter instead of within the code itself, which makes it less error-prone, removing the chance that
+                        some response are missing headers.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="upgrade-to-wildfly-19"><a class="anchor" href="#upgrade-to-wildfly-19"></a>Upgrade to WildFly 19</h4>
+                <div class="paragraph">
+                    <p>Keycloak server was upgraded to use WildFly 19 under the covers.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="other-improvements-6"><a class="anchor" href="#other-improvements-6"></a>Other improvements</h4>
+                <div class="ulist">
+                    <ul>
+                        <li>
+                            <p>Support for invoking Application Initiated Actions added to Keycloak JavaScript adapter</p>
+                        </li>
+                        <li>
+                            <p>Performance improvements to fetching resources and policies during evaluation</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-9-0-1"><a class="anchor" href="#keycloak-9-0-1"></a>Keycloak 9.0.1</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-12"><a class="anchor" href="#highlights-12"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="promisetype-removed-from-javascript-adapter"><a class="anchor" href="#promisetype-removed-from-javascript-adapter"></a>PromiseType removed from JavaScript adapter</h4>
+                <div class="paragraph">
+                    <p>The promiseType init option has been removed from the JavaScript adapter. Instead a promise that supports
+                        both native promise API and legacy Keycloak promise API is returned. This allows gradually migration of
+                        applications from the legacy/deprecated API to the native promise API.</p>
+                </div>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="other-improvements-7"><a class="anchor" href="#other-improvements-7"></a>Other improvements</h3>
+            <div class="sect3">
+                <h4 id="reverted-breaking-api-changes-to-localeselectorspi"><a class="anchor" href="#reverted-breaking-api-changes-to-localeselectorspi"></a>Reverted breaking API changes to LocaleSelectorSPI</h4>
+                <div class="paragraph">
+                    <p>In 9.0.0 a breaking API change was introduced to LocaleSelectorSPI. With 9.0.1 the changes to
+                        this API is now reverted, and a new LocaleUpdaterSPI has been introduced.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="fixed-the-automatic-resolution-of-code-keycloakconfigresolver-code-instances-for-spring-boot-applications"><a class="anchor" href="#fixed-the-automatic-resolution-of-code-keycloakconfigresolver-code-instances-for-spring-boot-applications"></a>Fixed the automatic resolution of <code>KeycloakConfigResolver</code> instances for Spring Boot Applications</h4>
+                <div class="paragraph">
+                    <p>In previous releases, Spring Boot applications had to manually implement the <code>KeycloakConfigResolver</code> interface or extend the
+                        built-in <code>org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver</code>.</p>
+                </div>
+                <div class="paragraph">
+                    <p>This release fixes the backward compatibility issue by resolving instances automatically in case none is provided. As well as still
+                        allowing applications to provide their own configuration resolver implementations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-9-0-0"><a class="anchor" href="#keycloak-9-0-0"></a>Keycloak 9.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-13"><a class="anchor" href="#highlights-13"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="drools-policy-removed"><a class="anchor" href="#drools-policy-removed"></a>Drools Policy Removed</h4>
+                <div class="paragraph">
+                    <p>The Drools Policy was finally removed after the deprecation period. If you need more complex policies you can still use JavaScript-based policies.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="pagination-support-for-clients"><a class="anchor" href="#pagination-support-for-clients"></a>Pagination support for clients</h4>
+                <div class="paragraph">
+                    <p>Pagination support was added to clients in the Admin Console and REST API. Thanks to <a href="https://github.com/saibot94">saibot94</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="new-elytron-credential-store-vault-provider"><a class="anchor" href="#new-elytron-credential-store-vault-provider"></a>New Elytron Credential Store Vault Provider</h4>
+                <div class="paragraph">
+                    <p>A new built-in vault provider that reads secrets from a keystore-backed Elytron credential store has been added as a WildFly
+                        extension. The creation and management of the credential store is handled by Elytron using either the <code>elytron</code> subsystem or the
+                        <code>elytron-tool.sh</code> script.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="more-updates-to-w3c-webauthn-and-authentication-flows"><a class="anchor" href="#more-updates-to-w3c-webauthn-and-authentication-flows"></a>More updates to W3C WebAuthn and Authentication flows</h4>
+                <div class="paragraph">
+                    <p>In this release, we did some usability improvements to the authentication flows. It should be easier for the end user to choose between
+                        available authentication mechanisms for two-factor authentication. It should be more intuitive to log in with OTP or WebAuthn
+                        considering the fact that user can have more OTP or WebAuthn credentials. There is also better support for passwordless WebAuthn authentication.
+                        Finally, we did some work on defects related to the authentication flows.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="improved-handling-of-user-locale"><a class="anchor" href="#improved-handling-of-user-locale"></a>Improved handling of user locale</h4>
+                <div class="paragraph">
+                    <p>A number of improvements have been made to how the locale for the login page is selected, as well as when the locale
+                        is updated for a user.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="other-improvements-8"><a class="anchor" href="#other-improvements-8"></a>Other improvements</h4>
+                <div class="ulist">
+                    <ul>
+                        <li>
+                            <p>Authorization Header token is only considered now when type is Bearer on Gatekeeper. Thanks to <a href="https://github.com/HansK-p">HansK-p</a></p>
+                        </li>
+                        <li>
+                            <p>More algorithms are supported for the client authentication with signed client secret JWT. Namely HS384 and HS512 algorithms were added.
+                                Thanks to <a href="https://github.com/tnorimat">tnorimat</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-8-0-2"><a class="anchor" href="#keycloak-8-0-2"></a>Keycloak 8.0.2</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-14"><a class="anchor" href="#highlights-14"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="samesite-cookie-changes-with-upcoming-google-chrome-update"><a class="anchor" href="#samesite-cookie-changes-with-upcoming-google-chrome-update"></a>SameSite cookie changes with upcoming Google Chrome update</h4>
+                <div class="paragraph">
+                    <p>Starting with version 80, Google Chrome will change the default value for the <code>SameSite</code> cookie parameter to <code>Lax</code>.
+                        Therefore, changes were required to several Keycloak cookies (especially those which are used within the
+                        Javascript adapter for checking the session status using the iframe) to set <code>SameSite</code> parameter to <code>None</code>. Please note
+                        that this setting also requires setting the <code>Secure</code> parameter, hence starting with this version, the Javascript
+                        adapter will only be fully functional when using the SSL / TLS connection on the Keycloak side.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-8-0-1"><a class="anchor" href="#keycloak-8-0-1"></a>Keycloak 8.0.1</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-15"><a class="anchor" href="#highlights-15"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="ldap-issue"><a class="anchor" href="#ldap-issue"></a>LDAP Issue</h4>
+                <div class="paragraph">
+                    <p>This release fixes a critical vulnerability in LDAP introduced in Keycloak 7. If you are using Keycloak 7.0.0, 7.0.1 or
+                        8.0.0 in production we strongly suggest that you upgrade immediately.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="wildfly-18-0-1-final"><a class="anchor" href="#wildfly-18-0-1-final"></a>WildFly 18.0.1.Final</h4>
+                <div class="paragraph">
+                    <p>Upgrade to WildFly 18.0.1.Final which includes updates to a number of CVEs in third-party libraries.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-8-0-0"><a class="anchor" href="#keycloak-8-0-0"></a>Keycloak 8.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-16"><a class="anchor" href="#highlights-16"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="vault"><a class="anchor" href="#vault"></a>Vault</h4>
+                <div class="paragraph">
+                    <p>Several configuration fields can obtain their value from
+                        a vault instead of entering the value directly: LDAP bind password,
+                        SMTP password, and identity provider secrets.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Furthermore, new vault SPI has been introduced to enable development
+                        of extensions to access secrets from custom vaults.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="new-default-hostname-provider"><a class="anchor" href="#new-default-hostname-provider"></a>New Default Hostname provider</h4>
+                <div class="paragraph">
+                    <p>The fixed and request hostname providers have been replaced with a single new default hostname provider. This provider
+                        comes with a number of improvements, including:</p>
+                </div>
+                <div class="ulist">
+                    <ul>
+                        <li>
+                            <p>No need to change provider to set fixed base URL</p>
+                        </li>
+                        <li>
+                            <p>Support different base URL for frontend and backend requests</p>
+                        </li>
+                        <li>
+                            <p>Support changing context-path in cases where Keycloak is exposed on a different context-path through a reverse proxy</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="messages-in-theme-resources"><a class="anchor" href="#messages-in-theme-resources"></a>Messages in theme resources</h4>
+                <div class="paragraph">
+                    <p>Message bundles in theme resources enables internationalization of custom providers such as authenticators. They are also shared between all theme types, making it possible to for example share messages between the login and account console. Thanks to <a href="https://github.com/micedre">micedre</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="rolemappingsprovider-spi-for-the-saml-adapters"><a class="anchor" href="#rolemappingsprovider-spi-for-the-saml-adapters"></a>RoleMappingsProvider SPI for the SAML adapters</h4>
+                <div class="paragraph">
+                    <p>We have added a new SPI that allows for the configuration of custom role mappers that are used by the SAML adapters to map
+                        the roles extracted from the SAML assertion into roles that exist in the SP application environment. This is particularly useful
+                        when the adapters need to communicate with third party IDPs and the roles set by the IDP in the assertion do not correspond to
+                        the roles that were defined for the SP application. The provider to be used can be configured in the <code>keycloak-saml.xml</code>
+                        file or in the <code>keycloak-saml</code> subsystem. An implementation that performs the role mappings based on the contents of a properties
+                        file was also provided.</p>
+                </div>
+                <div class="paragraph">
+                    <p>Notice that when Keycloak acts as the IDP we can use the built-in role mappers to perform any necessary mappings
+                        before setting the roles into the assertion, so this SPI will probably be redundant in this case. The <code>RoleMappingsProvider</code>
+                        SPI was designed for situations when the IDP offer no way to map roles before adding them to the assertion.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="wildfly-18-upgrade"><a class="anchor" href="#wildfly-18-upgrade"></a>WildFly 18 Upgrade</h4>
+                <div class="paragraph">
+                    <p>Keycloak server was upgraded to use WildFly 18 under the covers.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="w3c-web-authentication-support"><a class="anchor" href="#w3c-web-authentication-support"></a>W3C Web Authentication support</h4>
+                <div class="paragraph">
+                    <p>In this release, we added initial support for W3C Web Authentication (WebAuthn). There are a few limitations in current implementation,
+                        however we are working on further improvements in this area. Thanks to <a href="https://github.com/tnorimat">tnorimat</a> for the contribution. Also thanks to
+                        ynojima for the help and feedback.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="support-for-password-less-authentication-multi-factor-authentication-and-multiple-credentials-per-user"><a class="anchor" href="#support-for-password-less-authentication-multi-factor-authentication-and-multiple-credentials-per-user"></a>Support for password-less authentication, multi-factor authentication and multiple credentials per user</h4>
+                <div class="paragraph">
+                    <p>With the arrival of W3C Web Authentication support, we’ve refined the authentication flow system to be able to allow a user to select which authentication method is preferred for login (for example, the choice between an OTP credential and a WebAuthn credential). The new mechanisms also allow an administrator to
+                        craft flows for password-less login, for example just using WebAuthn as an authentication method. Please note that with these changes, any custom authentication
+                        flow you have created may need to be adapted to the new flow logic.</p>
+                </div>
+                <div class="paragraph">
+                    <p>As a result of these changes, users can now have multiple OTP devices and multiple WebAuthn devices. The same system that allows a user
+                        to select which type of device to use during login also allows that user to select which specific device to use. Thanks to the <a href="https://github.com/cloudtrust">Cloudtrust</a> team:
+                        <a href="https://github.com/AlistairDoswald">AlistairDoswald</a>, <a href="https://github.com/fperot74">sispeo</a> and <a href="https://github.com/Fratt">Fratt</a> for their contributions, and
+                        to <a href="https://github.com/harture">harture</a> and <a href="https://github.com/lagess">Laurent</a> for their help.</p>
+                </div>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="other-improvements-9"><a class="anchor" href="#other-improvements-9"></a>Other Improvements</h3>
+            <div class="sect3">
+                <h4 id="system-properties-and-environment-variables-support-in-theme-properties"><a class="anchor" href="#system-properties-and-environment-variables-support-in-theme-properties"></a>System properties and environment variables support in theme.properties</h4>
+                <div class="paragraph">
+                    <p>It is now possible to use system properties and environment variables within theme.properties file. Thanks to <a href="https://github.com/Opa-">Opa-</a></p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="support-more-signing-algorithms-for-client-authentication-with-signed-jwt"><a class="anchor" href="#support-more-signing-algorithms-for-client-authentication-with-signed-jwt"></a>Support more signing algorithms for client authentication with signed JWT</h4>
+                <div class="paragraph">
+                    <p>Thanks to <a href="https://github.com/tnorimat">tnorimat</a>, we support more signing algorithms for client authentication with signed JWT.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="configurable-client-authentication-method-for-oidc-identity-providers"><a class="anchor" href="#configurable-client-authentication-method-for-oidc-identity-providers"></a>Configurable client authentication method for OIDC Identity providers</h4>
+                <div class="paragraph">
+                    <p>In this release, possibility to authenticate OIDC providers with signed JWT or basic authentication was added. So all the client
+                        authentication methods mentioned in the <a href="https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication">OIDC specification</a>
+                        are supported now. Thanks to <a href="https://github.com/madgaet">madgaet</a> and <a href="https://github.com/rradillen">rradillen</a> for contributions.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="support-enable-disable-logging-into-the-javascript-adapter"><a class="anchor" href="#support-enable-disable-logging-into-the-javascript-adapter"></a>Support enable/disable logging into the JavaScript adapter</h4>
+                <div class="paragraph">
+                    <p>Thanks to <a href="https://github.com/jonkoops">jonkoops</a> now it’s possible to enable or disable logging for the JS adapter.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="credentials-support-removed-from-the-javascript-adapter"><a class="anchor" href="#credentials-support-removed-from-the-javascript-adapter"></a>Credentials support removed from the JavaScript adapter</h4>
+                <div class="paragraph">
+                    <p>The option to provide client credentials in the JavaScript adapter was removed. Thanks to <a href="https://github.com/jonkoops">jonkoops</a></p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="updates-for-gatekeeper"><a class="anchor" href="#updates-for-gatekeeper"></a>Updates for Gatekeeper</h4>
+                <div class="ulist">
+                    <ul>
+                        <li>
+                            <p>Secure token and logout endpoint were included in Gatekeeper. Thanks to <a href="https://github.com/fredbi">fredbi</a></p>
+                        </li>
+                        <li>
+                            <p>There was a bug on Gatekeeper which was making cookies to be applied to subdomains. Thanks to <a href="https://github.com/daniel-ac-martin">daniel-ac-martin</a> the issue was fixed</p>
+                        </li>
+                        <li>
+                            <p>Now Gatekeeper provides support to Same-site cookies. Thanks to <a href="https://github.com/fiji-flo">fiji-flo</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="deploying-scripts-to-the-server"><a class="anchor" href="#deploying-scripts-to-the-server"></a>Deploying Scripts to the Server</h4>
+                <div class="paragraph">
+                    <p>Please take a look at <a href="https://www.keycloak.org/docs/21.1.2/release_notes/#keycloak-7-0-1">7.0.1 Release Notes</a> for more details on how you can now deploy and run scripts to customize specific behavior.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-7-0-1"><a class="anchor" href="#keycloak-7-0-1"></a>Keycloak 7.0.1</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="deploying-scripts-to-the-server-2"><a class="anchor" href="#deploying-scripts-to-the-server-2"></a>Deploying Scripts to the Server</h3>
+            <div class="paragraph">
+                <p>Until now, administrators were allowed to upload scripts to the server through the Keycloak Administration Console as well as
+                    through the RESTful Admin API.</p>
+            </div>
+            <div class="paragraph">
+                <p>For now on, this capability is <strong>disabled</strong> by default and users should prefer to deploy scripts directly to the server. For more details,
+                    please take a look at <a href="https://www.keycloak.org/docs/21.1.2/server_development/#_script_providers">JavaScript Providers</a>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-7-0-0"><a class="anchor" href="#keycloak-7-0-0"></a>Keycloak 7.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="highlights-17"><a class="anchor" href="#highlights-17"></a>Highlights</h3>
+            <div class="sect3">
+                <h4 id="wildfly-17-upgrade"><a class="anchor" href="#wildfly-17-upgrade"></a>WildFly 17 Upgrade</h4>
+                <div class="paragraph">
+                    <p>Keycloak server was upgraded to use WildFly 17 under the covers.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="tomcat-9-adapter-support"><a class="anchor" href="#tomcat-9-adapter-support"></a>Tomcat 9 adapter support</h4>
+                <div class="paragraph">
+                    <p>Java adapter for Apache Tomcat 8 and Apache Tomcat 9 was unified and now it serves for both of them.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="new-account-console"><a class="anchor" href="#new-account-console"></a>New Account Console</h4>
+                <div class="paragraph">
+                    <p>A lot of work has been done on the new Account Console and Account REST API. It’s not quite ready yet, but it’s getting
+                        there and hopefully will be fully done for Keycloak 8.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="signed-and-encrypted-id-token-support"><a class="anchor" href="#signed-and-encrypted-id-token-support"></a>Signed and Encrypted ID Token Support</h4>
+                <div class="paragraph">
+                    <p>Keycloak can support the signed and encrypted ID token according to the Json Web Encryption (JWE) specification. Thanks to <a href="https://github.com/tnorimat">tnorimat</a>.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="testing-and-release-automation"><a class="anchor" href="#testing-and-release-automation"></a>Testing and release automation</h4>
+                <div class="paragraph">
+                    <p>The Keycloak team has spent a significant amount of time on automation around testing and releases both for Keycloak and
+                        Red Hat Single Sign-On.</p>
+                </div>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="other-improvements-10"><a class="anchor" href="#other-improvements-10"></a>Other improvements</h3>
+            <div class="ulist">
+                <ul>
+                    <li>
+                        <p>PKCE support added to JavaScript adapter. Thanks to <a href="https://github.com/thomasdarimont">thomasdarimont</a></p>
+                    </li>
+                    <li>
+                        <p>Oracle database support added to Keycloak container image. Thanks to <a href="https://github.com/nerdstep">nerdstep</a></p>
+                    </li>
+                    <li>
+                        <p>Clock Skew support added to SAML adapter. Thanks to <a href="https://github.com/steevebtib">steevebtib</a></p>
+                    </li>
+                    <li>
+                        <p>TypeScript support for Node.js adapter. Thanks to <a href="https://github.com/evanshortiss">evanshortiss</a></p>
+                    </li>
+                    <li>
+                        <p>Gatekeeper now allows to provide unencrypted token in header, while encrypting in cookie. There was also a bug on Gatekeeper when <code>Revoke Refresh Token</code> is enabled on the Keycloak server. The issue was fixed. Thanks to <a href="https://github.com/fredbi">fredbi</a></p>
+                    </li>
+                    <li>
+                        <p>New tab in the Admin console to display the list of users for client roles. Thanks to <a href="https://github.com/unly">unly</a></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-6-0-0"><a class="anchor" href="#keycloak-6-0-0"></a>Keycloak 6.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="wildfly-16-upgrade"><a class="anchor" href="#wildfly-16-upgrade"></a>WildFly 16 Upgrade</h3>
+            <div class="paragraph">
+                <p>Keycloak server was upgraded to use WildFly 16 under the covers.</p>
+            </div>
+            <div class="sect3">
+                <h4 id="smallrye-health-and-metrics-extensions"><a class="anchor" href="#smallrye-health-and-metrics-extensions"></a>SmallRye Health and Metrics extensions</h4>
+                <div class="paragraph">
+                    <p>Keycloak now comes enabled with the SmallRye Health and Metrics extensions which provides standard health and metrics
+                        endpoints. We will add some documentation as well as Keycloak specific metrics soon.</p>
+                </div>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="ps256-support"><a class="anchor" href="#ps256-support"></a>PS256 support</h3>
+            <div class="paragraph">
+                <p>Thanks to <a href="https://github.com/tnorimat">tnorimat</a> Keycloak now has support for signing and verifying tokens with PS256.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="mp-jwt-client-scope"><a class="anchor" href="#mp-jwt-client-scope"></a>MP-JWT Client Scope</h3>
+            <div class="paragraph">
+                <p>New built-in client scope to make it easy to issue tokens following the Eclipse MicroProfile specification.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-5-0-0"><a class="anchor" href="#keycloak-5-0-0"></a>Keycloak 5.0.0</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="wildfly-15-upgrade"><a class="anchor" href="#wildfly-15-upgrade"></a>WildFly 15 Upgrade</h3>
+            <div class="paragraph">
+                <p>Keycloak server was upgraded to use WildFly 15 under the covers.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-4-8-0-final"><a class="anchor" href="#keycloak-4-8-0-final"></a>Keycloak 4.8.0.Final</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="openshift-integration"><a class="anchor" href="#openshift-integration"></a>OpenShift Integration</h3>
+            <div class="paragraph">
+                <p>It is now possible to fully secure OpenShift 3.11 with Keycloak, including the ability to automatically expose
+                    Service Accounts as OAuth clients as clients to Keycloak.</p>
+            </div>
+            <div class="paragraph">
+                <p>This is currently a technology preview feature.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="rules-drools-policy-marked-as-a-technology-preview-feature"><a class="anchor" href="#rules-drools-policy-marked-as-a-technology-preview-feature"></a>Rules/Drools Policy Marked as a Technology Preview Feature</h3>
+            <div class="paragraph">
+                <p>Until now, Drools policies were enabled by default. But now, this policy type is only available as a technology preview feature and
+                    to use it you need to enable the preview profile or the corresponding feature. Take a look at the <a href="https://www.keycloak.org/docs/21.1.2/authorization_services/">Authorization Services Guide</a> for more details.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="support-for-db2-removed"><a class="anchor" href="#support-for-db2-removed"></a>Support for DB2 removed</h3>
+            <div class="paragraph">
+                <p>DB2 support has been deprecated for a while. With this release we have removed all support for DB2.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-4-7-0-final"><a class="anchor" href="#keycloak-4-7-0-final"></a>Keycloak 4.7.0.Final</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="enhanced-remember-me"><a class="anchor" href="#enhanced-remember-me"></a>Enhanced Remember Me</h3>
+            <div class="paragraph">
+                <p>Introduced the ability to specify different session idle and max timeouts for remember me sessions. This enables remember
+                    me sessions to live longer than regular sessions.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="pagination-support-for-groups"><a class="anchor" href="#pagination-support-for-groups"></a>Pagination support for Groups</h3>
+            <div class="paragraph">
+                <p>Large numbers of groups have previously caused issues in the admin console. This is now resolved by the introduction of
+                    pagination of groups.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="improve-startup-time-with-large-number-of-offline-sessions"><a class="anchor" href="#improve-startup-time-with-large-number-of-offline-sessions"></a>Improve startup time with large number of offline sessions</h3>
+            <div class="paragraph">
+                <p>In the past, starting the server could take a long time if there were many offline sessions. This startup time has now
+                    been significantly reduced.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-4-6-0-final"><a class="anchor" href="#keycloak-4-6-0-final"></a>Keycloak 4.6.0.Final</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="upgrade-to-wildfly-14"><a class="anchor" href="#upgrade-to-wildfly-14"></a>Upgrade to WildFly 14</h3>
+            <div class="paragraph">
+                <p>The Keycloak server was upgraded to use WildFly 14 under the covers.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="keycloak-gatekeeper"><a class="anchor" href="#keycloak-gatekeeper"></a>Keycloak Gatekeeper</h3>
+            <div class="paragraph">
+                <p>Keycloak Gatekeeper provides a security proxy that can be used to secure applications and services without an adapter.
+                    It can be installed locally alongside your application or as a sidecar on OpenShift or Kubernetes.</p>
+            </div>
+            <div class="paragraph">
+                <p>Huge thanks to <a href="https://github.com/gambol99">gambol99</a> for contributing this work to Keycloak.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-4-5-0-final"><a class="anchor" href="#keycloak-4-5-0-final"></a>Keycloak 4.5.0.Final</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="signature-spi"><a class="anchor" href="#signature-spi"></a>Signature SPI</h3>
+            <div class="paragraph">
+                <p>The Signature SPI makes it possible to plug-in additional signature algorithms. This enables additional signatures and also enables changing how signatures are generated. For example, using this allows using an HSM device to sign tokens.</p>
+            </div>
+            <div class="paragraph">
+                <p>Thanks to <a href="https://github.com/tnorimat">tnorimat</a> for contributing a significant part of this work.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="new-signature-algorithms"><a class="anchor" href="#new-signature-algorithms"></a>New Signature Algorithms</h3>
+            <div class="paragraph">
+                <p>Alongside the Signature SPI there is now also support for additional signature algorithms.</p>
+            </div>
+            <div class="paragraph">
+                <p>Keycloak now has support for RS256, RS384, RS512, ES256, ES384, ES512, HS256, HS384 and HS512.</p>
+            </div>
+            <div class="paragraph">
+                <p>Elliptic Curve Digital Signature Algorithm (ES256/384/512) are very interesting as they provide similar
+                    security properties as RSA signatures, but use significantly less CPU.</p>
+            </div>
+            <div class="paragraph">
+                <p>HMAC (HS256/384/512) are also very useful when you do not want your application to verify the signature itself.
+                    Since these are symmetric signatures only Keycloak is able to verify the signature, which requires the
+                    application to use the token introspection endpoint to verify tokens.</p>
+            </div>
+            <div class="paragraph">
+                <p>Thanks to <a href="https://github.com/tnorimat">tnorimat</a> for contributing a significant part of this work.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="better-audience-support-for-openid-connect-clients"><a class="anchor" href="#better-audience-support-for-openid-connect-clients"></a>Better Audience Support for OpenID Connect clients</h3>
+            <div class="paragraph">
+                <p>It is now possible to specify the audiences in the tokens issued for OpenID Connect clients. There is also support for verification
+                    of audience on the adapter side.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="minor-improvements"><a class="anchor" href="#minor-improvements"></a>Minor improvements</h3>
+            <div class="ulist">
+                <ul>
+                    <li>
+                        <p>Added LocaleSelector SPI, which allows to change the way how the locale will be resolved for a particular request. Thanks to <a href="https://github.com/knutz3n">knutz3n</a></p>
+                    </li>
+                    <li>
+                        <p>Added an authenticator to automatically link Identity Provider identity to an existing account after first Idp authentication. Thanks to <a href="https://github.com/slominskir">slominskir</a></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-4-4-0-final"><a class="anchor" href="#keycloak-4-4-0-final"></a>Keycloak 4.4.0.Final</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="upgrade-to-wildfly-13"><a class="anchor" href="#upgrade-to-wildfly-13"></a>Upgrade to WildFly 13</h3>
+            <div class="paragraph">
+                <p>The Keycloak server was upgraded to use WildFly 13 under the covers. This means update of the underlying dependencies and also
+                    some changes in the configuration. We now also support WildFly 13 adapter and we upgraded the underlying JDG/Infinispan server version for
+                    the Cross-DC setup. See <a href="https://www.keycloak.org/docs/21.1.2/upgrading/">Upgrading Guide</a> for more details.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="authorization-services-support-in-node-js"><a class="anchor" href="#authorization-services-support-in-node-js"></a>Authorization Services support in Node.js</h3>
+            <div class="paragraph">
+                <p>Having authorization services support in Node.js makes it very easy to do fine-grained central authorization
+                    with the Node.js adapter.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="minor-improvements-2"><a class="anchor" href="#minor-improvements-2"></a>Minor improvements</h3>
+            <div class="ulist">
+                <ul>
+                    <li>
+                        <p>Update design for the welcome page</p>
+                    </li>
+                    <li>
+                        <p>Allow passing current locale to OAuth2 IdPs. Thanks to <a href="https://github.com/knutz3n">knutz3n</a></p>
+                    </li>
+                    <li>
+                        <p>Support Content-Security-Policy-Report-Only security header. Thanks to <a href="https://github.com/knutz3n">knutz3n</a></p>
+                    </li>
+                    <li>
+                        <p>Script based ProtocolMapper for SAML. Thanks to <a href="https://github.com/AlistairDoswald">AlistairDoswald</a></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-4-3-0-final"><a class="anchor" href="#keycloak-4-3-0-final"></a>Keycloak 4.3.0.Final</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="hostname-spi"><a class="anchor" href="#hostname-spi"></a>Hostname SPI</h3>
+            <div class="paragraph">
+                <p>The hostname SPI introduces a more flexible way to configure the hostname for Keycloak. There are two
+                    built-in providers. The first is request, which uses the request headers to determine the hostname. The second
+                    is fixed, which allows configuring a fixed hostname. The latter makes sure that only valid hostnames can be
+                    used and also allows internal applications to invoke Keycloak through an alternative URL.</p>
+            </div>
+            <div class="paragraph">
+                <p>For more details refer to the threat mitigation section in the <a href="https://www.keycloak.org/docs/21.1.2/server_admin/">Server Administration Guide</a>.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="x509-client-authenticator"><a class="anchor" href="#x509-client-authenticator"></a>X509 Client Authenticator</h3>
+            <div class="paragraph">
+                <p>The newly added Client Authenticator uses X509 Client Certificates and Mutual TLS to secure a connection from the client. In addition to that
+                    the Keycloak Server validates Subject DN field of the client’s certificate.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="performance-improvements-to-authorization-services"><a class="anchor" href="#performance-improvements-to-authorization-services"></a>Performance improvements to Authorization Services</h3>
+            <div class="paragraph">
+                <p>For this release, we improved policy evaluation performance across the board, increasing reliability and throughput. The main
+                    changes we did were related with trying to optimize the policy evaluation path by avoiding unnecessary flows and collect decisions
+                    as soon as they happen. We also introduced a policy decision cache on a per-request basis, avoiding redundant decisions from policies
+                    previously evaluated.</p>
+            </div>
+            <div class="paragraph">
+                <p>We are also working on other layers of cache which should give a much better experience. See <a href="https://issues.redhat.com/browse/KEYCLOAK-7952">KEYCLOAK-7952</a>.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="choosing-the-response-mode-when-obtaining-permissions-from-the-server"><a class="anchor" href="#choosing-the-response-mode-when-obtaining-permissions-from-the-server"></a>Choosing the response mode when obtaining permissions from the server</h3>
+            <div class="paragraph">
+                <p>In previous versions, permissions were always returned from the server using standard OAuth2 response, containing the access and refresh tokens. In this release,
+                    clients can use a <code>response_mode</code> parameter to specify how the server should respond to an authorization request. This parameter accepts two values:</p>
+            </div>
+            <div class="ulist">
+                <ul>
+                    <li>
+                        <p><code>decision</code></p>
+                        <div class="paragraph">
+                            <p>Indicating that responses should only contain a flag indicating whether or not permissions were granted by the server. Otherwise a <code>403</code> HTTP status code is returned.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <p><code>permissions</code></p>
+                        <div class="paragraph">
+                            <p>Indicating that a response should contain every single permission granted by the server using a JSON format.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="nodejs-policy-enforcer"><a class="anchor" href="#nodejs-policy-enforcer"></a>NodeJS Policy Enforcer</h3>
+            <div class="paragraph">
+                <p>The <a href="https://github.com/keycloak/keycloak-nodejs-connect">keycloak-nodejs-connect</a>, an adapter for NodeJS, now supports constructs to protect
+                    resources based on decisions taken from the server. The new construct allows users to protect their resources using fine-grained permissions as follows:</p>
+            </div>
+            <div class="listingblock">
+                <div class="content">
+<pre class="CodeRay highlight"><code data-lang="js">app.get(<span class="string"><span class="delimiter">'</span><span class="content">/protected/resource</span><span class="delimiter">'</span></span>, keycloak.enforcer(<span class="string"><span class="delimiter">'</span><span class="content">resource:view</span><span class="delimiter">'</span></span>), <span class="keyword">function</span> (req, res) {
+  res.json({<span class="key">message</span>: <span class="string"><span class="delimiter">'</span><span class="content">access granted</span><span class="delimiter">'</span></span>});
+});</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="support-hosted-domain-for-google-logins"><a class="anchor" href="#support-hosted-domain-for-google-logins"></a>Support hosted domain for Google logins</h3>
+            <div class="paragraph">
+                <p>Login with Google now supports the <code>hd</code> parameter to restrict Google logins to a specific hosted domain at Google. When
+                    this is specified in the identity provider any login from a different domain is rejected.</p>
+            </div>
+            <div class="paragraph">
+                <p>Thanks to <a href="https://github.com/brushmate">brushmate</a> for the contribution.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="escape-unsafe-tags-in-html-output"><a class="anchor" href="#escape-unsafe-tags-in-html-output"></a>Escape unsafe tags in HTML output</h3>
+            <div class="paragraph">
+                <p>Most HTML output is already escaped for HTML tags, but there are some places where HTML tags are permitted.
+                    These are only where admin access is needed to update the value. Even though it would require admin access to update such
+                    fields we have added an extra layer of defence and are now escaping unsafe elements like <code>&lt;script&gt;</code>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-4-2-0-final"><a class="anchor" href="#keycloak-4-2-0-final"></a>Keycloak 4.2.0.Final</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="browser-tab-support-for-cordova"><a class="anchor" href="#browser-tab-support-for-cordova"></a>Browser tab support for Cordova</h3>
+            <div class="paragraph">
+                <p>We now have support for using browser tab and universal links in the JavaScript adapter for Cordova. This enables SSO
+                    between multiple applications as well as increases security.</p>
+            </div>
+            <div class="paragraph">
+                <p>Thanks to <a href="https://github.com/gtudan">gtudan</a> for the contribution.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="saml-adapter-multitenancy-support"><a class="anchor" href="#saml-adapter-multitenancy-support"></a>SAML adapter multitenancy support</h3>
+            <div class="paragraph">
+                <p>The SAML adapter can support multi-tenancy now just like the built-in adapter for OpenID Connect.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="an-option-to-create-claims-with-dots-in-them"><a class="anchor" href="#an-option-to-create-claims-with-dots-in-them"></a>An option to create claims with dots (.) in them</h3>
+            <div class="paragraph">
+                <p>In previous versions, it was not possible to create claims in the token using a claim name containing a dot (.) character. Now it is
+                    possible to escape the dot character in the configuration, so a claim name with the dot character can be used.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-4-1-0-final"><a class="anchor" href="#keycloak-4-1-0-final"></a>Keycloak 4.1.0.Final</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="making-spring-boot-2-the-default-starter"><a class="anchor" href="#making-spring-boot-2-the-default-starter"></a>Making Spring Boot 2 the default starter</h3>
+            <div class="paragraph">
+                <p>Starting with release 4.1, the Spring Boot starter will be based on the Spring Boot 2 adapter. If you are using an older Spring Boot version, the keycloak-legacy-spring-boot-starter is available.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sect1">
+    <h2 id="keycloak-4-0-0-final"><a class="anchor" href="#keycloak-4-0-0-final"></a>Keycloak 4.0.0.Final</h2>
+    <div class="sectionbody">
+        <div class="sect2">
+            <h3 id="client-scopes-and-support-for-oauth-2-scope-parameter"><a class="anchor" href="#client-scopes-and-support-for-oauth-2-scope-parameter"></a>Client Scopes and support for OAuth 2 scope parameter</h3>
+            <div class="paragraph">
+                <p>We added support for Client Scopes, which replaces Client Templates. Client Scopes are a more flexible approach and also provides
+                    better support for the OAuth <code>scope</code> parameter.</p>
+            </div>
+            <div class="paragraph">
+                <p>There are changes related to Client Scopes to the consent screen. The list on the consent screen is now linked to client scopes
+                    instead of protocol mappers and roles.</p>
+            </div>
+            <div class="paragraph">
+                <p>See the documentation and migration guide for more details.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="oauth-2-certificate-bound-access-tokens"><a class="anchor" href="#oauth-2-certificate-bound-access-tokens"></a>OAuth 2 Certificate Bound Access Tokens</h3>
+            <div class="paragraph">
+                <p>We now have a partial implementation of the specification
+                    <a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-mtls-08">OAuth 2.0 Mutual TLS Client Authentication and Certificate Bound Access Tokens</a> .
+                    More accurately we have support for the Certificate Bound Access Tokens. If your confidential client is able to use 2-way SSL,
+                    Keycloak will be able to add the hash of the client certificate into the tokens issued for the client. At this moment,
+                    it’s just  the Keycloak itself, which verifies the token hashes (for example during <code>refresh token</code> requests).
+                    We plan to add support to adapters as well. We also plan to add support for Mutual TLS Client Authentication.</p>
+            </div>
+            <div class="paragraph">
+                <p>Thanks to <a href="https://github.com/tnorimat">tnorimat</a> for the contribution.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="authorization-services"><a class="anchor" href="#authorization-services"></a>Authorization Services</h3>
+            <div class="sect3">
+                <h4 id="uma-2-0-support"><a class="anchor" href="#uma-2-0-support"></a>UMA 2.0 Support</h4>
+                <div class="paragraph">
+                    <p>UMA 2.0 is now supported for Authorization Services. Check the documentation for more details
+                        if you are coming from previous versions of Keycloak.</p>
+                </div>
+                <div class="sect4">
+                    <h5 id="user-managed-access-through-the-keycloak-account-service"><a class="anchor" href="#user-managed-access-through-the-keycloak-account-service"></a>User-Managed Access through the Keycloak Account Service</h5>
+                    <div class="paragraph">
+                        <p>Now end-users are able to manage their resources and the permissions associated with them through the Keycloak Account Service.
+                            From there, resource owners can now check their resources, share resources with another users as well approve requests from other users.</p>
+                    </div>
+                </div>
+                <div class="sect4">
+                    <h5 id="asynchronous-authorization-flow"><a class="anchor" href="#asynchronous-authorization-flow"></a>Asynchronous Authorization Flow</h5>
+                    <div class="paragraph">
+                        <p>When using UMA, client applications can now choose whether or not an authorization request should start an authorization flow
+                            to ask for the resource owner approval. This functionality allows applications to ask for resource owner
+                            approval when trying to access one of his resources on behalf of another user.</p>
+                    </div>
+                </div>
+                <div class="sect4">
+                    <h5 id="user-managed-permission-api"><a class="anchor" href="#user-managed-permission-api"></a>User-Managed Permission API</h5>
+                    <div class="paragraph">
+                        <p>Resource servers are now capable of associating additional policies to resources owned by a particular user. The new API provides
+                            operations to manage these permissions using different policy types such as role, group, user, client or a condition using JavaScript.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="pushed-claims"><a class="anchor" href="#pushed-claims"></a>Pushed Claims</h4>
+                <div class="paragraph">
+                    <p>Clients applications are now able to send arbitrary claims to Keycloak along with an authorization request in order to
+                        evaluate permissions based on these claims. This is a very handy addition when access
+                        should be granted (or denied) in the scope of a specific transaction or based on information about the runtime.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="resource-attributes"><a class="anchor" href="#resource-attributes"></a>Resource Attributes</h4>
+                <div class="paragraph">
+                    <p>It is now possible to associated attributes with resources protected by Keycloak and use these same attributes to evaluate permissions
+                        from your policies.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="policy-enforcer-now-accepts-regular-access-tokens"><a class="anchor" href="#policy-enforcer-now-accepts-regular-access-tokens"></a>Policy enforcer now accepts regular access tokens</h4>
+                <div class="paragraph">
+                    <p>In some situations, you may want to just send regular access tokens to a resource server but still be able to enforce policies on these resources.</p>
+                </div>
+                <div class="paragraph">
+                    <p>One of the main changes introduced by this release is that you are no longer required to exchange access tokens with RPTs in
+                        order to access resources protected by a resource server (when not using UMA). Depending on how the policy enforcer is configured on the resource server side, you can just send regular
+                        access tokens as a bearer token and permissions will still be enforced.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="policy-enforcer-can-now-load-resources-from-the-server-on-demand"><a class="anchor" href="#policy-enforcer-can-now-load-resources-from-the-server-on-demand"></a>Policy enforcer can now load resources from the server on-demand</h4>
+                <div class="paragraph">
+                    <p>Until now, when deploying an application configured with a <code>policy-enforcer</code>, the policy enforcer would either load all protected paths
+                        from the server or just map these paths from the adapter configuration. Users can now decide to load paths on-demand from the server and avoid
+                        map these resources in the adapter configuration. Depending on how many protected resources you have this functionality can also improve the time to
+                        deploy an application.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="policy-enforcer-now-supports-configuring-the-resource-cache"><a class="anchor" href="#policy-enforcer-now-supports-configuring-the-resource-cache"></a>Policy enforcer now supports configuring the resource cache</h4>
+                <div class="paragraph">
+                    <p>In order to avoid unnecessary hits to the server, the policy enforcer caches the mapping between protected resources and their corresponding paths
+                        in your application. Users can now configure the behaviour of the cache or even completely disable it.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="claim-information-points"><a class="anchor" href="#claim-information-points"></a>Claim Information Points</h4>
+                <div class="paragraph">
+                    <p>The <code>policy-enforcer</code> definition on the adapters (<code>keycloak.json</code>) was also updated to support the concept of pushed claims. There
+                        you have the concept of a <code>claim-information-point</code> which can be set to push claims from different sources such as the HTTP request or even
+                        from an external HTTP service.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="improvements-to-the-evaluation-api"><a class="anchor" href="#improvements-to-the-evaluation-api"></a>Improvements to the Evaluation API</h4>
+                <div class="paragraph">
+                    <p>The Evaluation API used to implement policies in Keycloak, especially JavaScript and Drools policies, provides now methods to:</p>
+                </div>
+                <div class="ulist">
+                    <ul>
+                        <li>
+                            <p>Access information from the current realm such as check for user roles, groups and attributes</p>
+                        </li>
+                        <li>
+                            <p>Push back arbitrary claims to the resource server in order to provide additional information on how a specific permissions should
+                                be enforced</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="authorization-services-2"><a class="anchor" href="#authorization-services-2"></a>Authorization Services</h3>
+            <div class="sect3">
+                <h4 id="uma-2-0"><a class="anchor" href="#uma-2-0"></a>UMA 2.0</h4>
+                <div class="paragraph">
+                    <p>UMA 2.0 is now supported for Authorization Services, including support for users to manage user access through
+                        the account management console. There are also other additions and improvements to authorization services.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="pushed-claims-2"><a class="anchor" href="#pushed-claims-2"></a>Pushed Claims</h4>
+                <div class="paragraph">
+                    <p>Clients can now push additional claims and have them used by policies when evaluating permissions.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="resource-attributes-2"><a class="anchor" href="#resource-attributes-2"></a>Resource Attributes</h4>
+                <div class="paragraph">
+                    <p>It is now possible to define attributes on resources in order to have them used by policies when evaluating permissions.</p>
+                </div>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="themes-and-theme-resources"><a class="anchor" href="#themes-and-theme-resources"></a>Themes and Theme Resources</h3>
+            <div class="paragraph">
+                <p>It is now possible to hot-deploy themes to Keycloak through a regular provider deployment. We have also added support for theme resources, which allows adding additional templates and resources without creating a theme. This is useful for custom authenticators that require additional pages to be added to the authentication flow.</p>
+            </div>
+            <div class="paragraph">
+                <p>We have also added support to override the theme for specific clients. If that is not adequate for your needs, then there is also a new Theme Selector SPI that allows you to implement custom logic to select the theme.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="instagram-identity-provider"><a class="anchor" href="#instagram-identity-provider"></a>Instagram Identity Provider</h3>
+            <div class="paragraph">
+                <p>We have added support to login with Instagram. Thanks to <a href="https://github.com/hguerrero">hguerrero</a> for the contribution.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="search-by-user-id-in-admin-console"><a class="anchor" href="#search-by-user-id-in-admin-console"></a>Search by User ID in Admin Console</h3>
+            <div class="paragraph">
+                <p>To search for a user by id in the admin console you previously had to edit the URL. It is now possible to search
+                    directly in the user search field.</p>
+            </div>
+        </div>
+        <div class="sect2">
+            <h3 id="adapters"><a class="anchor" href="#adapters"></a>Adapters</h3>
+            <div class="sect3">
+                <h4 id="spring-boot-2"><a class="anchor" href="#spring-boot-2"></a>Spring Boot 2</h4>
+                <div class="paragraph">
+                    <p>We now have support for Spring Boot 2.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="fuse-7"><a class="anchor" href="#fuse-7"></a>Fuse 7</h4>
+                <div class="paragraph">
+                    <p>We now have support for Fuse 7.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="javascript-native-promise-support"><a class="anchor" href="#javascript-native-promise-support"></a>JavaScript - Native Promise Support</h4>
+                <div class="paragraph">
+                    <p>The JavaScript adapter now supports native promises. It retains support for the old style promises as well.
+                        Both can be used interchangeably.</p>
+                </div>
+            </div>
+            <div class="sect3">
+                <h4 id="javascript-cordova-options"><a class="anchor" href="#javascript-cordova-options"></a>JavaScript - Cordova Options</h4>
+                <div class="paragraph">
+                    <p>It is now possible to pass Cordova-specific options to login and other methods in the JavaScript adapter.
+                        Thanks to <a href="https://github.com/looorent">loorent</a> for the contribution.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

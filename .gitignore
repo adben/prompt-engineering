@@ -31,3 +31,7 @@ nb-configuration.xml
 .ipynb_checkpoints/
 
 .env
+constants.py
+__pycache__
+2-extending-LLMs/persist/
+2-extending-LLMs/.chroma/
